@@ -73,6 +73,12 @@
 		    <artifactId>bootstrap</artifactId>
 		    <version>5.2.3</version>
 		</dependency>
+		<!-- Dozer -->
+		<dependency>
+			<groupId>com.github.dozermapper</groupId>
+			<artifactId>dozer-core</artifactId>
+			<version>6.4.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
