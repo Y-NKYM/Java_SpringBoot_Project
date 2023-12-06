@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.constant.MessageConst;
+import com.example.demo.constant.RegisterMessage;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.service.RegisterService;
@@ -36,7 +36,9 @@ public class RegisterController {
 	@PostMapping()
 	public String register(Model model, RegisterForm form) {
 		Optional<UserInfo> user = service.registerUser(form);
-		var message = AppUtil.getMessage(messageSource, chooseMessage(user));
+		RegisterMessage registerMessage = chooseMessage(user);
+		String message = AppUtil.getMessage(messageSource, registerMessage.getMessageId());
+		model.addAttribute("isError", registerMessage.isError());
 		model.addAttribute("message", message);
 		if(user.isEmpty()) {
 			return "/authenticate/register";
@@ -45,12 +47,12 @@ public class RegisterController {
 		}
 	}
 	
-	private String chooseMessage(Optional<UserInfo> user) {
+	private RegisterMessage chooseMessage(Optional<UserInfo> user) {
 		if(user.isEmpty()) {
-			return MessageConst.REGISTER_FAILED;
+			return RegisterMessage.FAILED;
 		} else {
 			
-			return MessageConst.REGISTER_SUCCEED;
+			return RegisterMessage.SUCCEED;
 		}
 	}
 }

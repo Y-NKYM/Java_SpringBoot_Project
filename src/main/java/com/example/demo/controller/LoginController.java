@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.constant.MessageConst;
+import com.example.demo.constant.LoginMessage;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.LoginForm;
 import com.example.demo.service.LoginService;
@@ -48,7 +48,9 @@ public class LoginController {
 		
 		boolean isCorrectUserAuth = user.isPresent() 
 				&& passwordEncoder.matches(form.getPassword(), user.get().getPassword());
-		var message = AppUtil.getMessage(messageSource, chooseMessage(isCorrectUserAuth));
+		LoginMessage loginMessage = chooseMessage(isCorrectUserAuth);
+		String message = AppUtil.getMessage(messageSource, loginMessage.getMessageId());
+		model.addAttribute("isError", loginMessage.isError());
 		model.addAttribute("message", message);
 		if(isCorrectUserAuth) {
 			return "/user/mypage";
@@ -57,12 +59,12 @@ public class LoginController {
 		}
 	}
 	
-	private String chooseMessage(boolean isCorrectUserAuth) {
+	private LoginMessage chooseMessage(boolean isCorrectUserAuth) {
 		if(isCorrectUserAuth) {
-			return MessageConst.LOGIN_SUCCEED;
+			return LoginMessage.SUCCEED;
 		} else {
 			
-			return MessageConst.LOGIN_FAILED;
+			return LoginMessage.FAILED;
 		}
 	}
 }
