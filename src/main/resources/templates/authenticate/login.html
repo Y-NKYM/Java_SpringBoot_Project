@@ -9,7 +9,9 @@
 <body>
 	<div class="container">
 		<h2>ログイン画面だよ</h2>
-		<span th:text="${message}"></span>
+		<div class="alert" role="alert" th:classappend="|${isError ? 'alert-danger' : 'alert-primary'}|" th:if="${message != null}" th:fragment="alert">
+			<span th:text="${message}"></span>
+		</div>
 		<form th:action="@{/login}" method="post" th:object="${loginForm}">
 			<div>
 				<label for="email" class="form-label">メールアドレス</label>
