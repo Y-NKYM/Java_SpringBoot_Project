@@ -48,13 +48,21 @@ public class LoginController {
 		
 		boolean isCorrectUserAuth = user.isPresent() 
 				&& passwordEncoder.matches(form.getPassword(), user.get().getPassword());
-	
+		var message = AppUtil.getMessage(messageSource, chooseMessage(isCorrectUserAuth));
+		model.addAttribute("message", message);
 		if(isCorrectUserAuth) {
-			return "redirect:/user";
+			return "/user/mypage";
 		}else {
-			var message = AppUtil.getMessage(messageSource, MessageConst.LOGIN_FAILED);
-			model.addAttribute("errorMsg", message);
 			return "/authenticate/login";
+		}
+	}
+	
+	private String chooseMessage(boolean isCorrectUserAuth) {
+		if(isCorrectUserAuth) {
+			return MessageConst.LOGIN_SUCCEED;
+		} else {
+			
+			return MessageConst.LOGIN_FAILED;
 		}
 	}
 }

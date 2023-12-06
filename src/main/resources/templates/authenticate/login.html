@@ -9,7 +9,7 @@
 <body>
 	<div class="container">
 		<h2>ログイン画面だよ</h2>
-		<span th:text="${errorMsg}"></span>
+		<span th:text="${message}"></span>
 		<form th:action="@{/login}" method="post" th:object="${loginForm}">
 			<div>
 				<label for="email" class="form-label">メールアドレス</label>
