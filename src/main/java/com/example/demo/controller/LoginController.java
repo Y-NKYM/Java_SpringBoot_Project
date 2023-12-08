@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.LoginMessage;
+import com.example.demo.constant.UrlConst;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.LoginForm;
 import com.example.demo.service.LoginService;
@@ -20,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/login")
+@RequestMapping(UrlConst.LOGIN)
 public class LoginController {
 	
 	/** ログイン画面Service */
