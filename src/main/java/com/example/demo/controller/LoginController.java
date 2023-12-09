@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import com.example.demo.form.LoginForm;
 import com.example.demo.service.LoginService;
 import com.example.demo.util.AppUtil;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -33,8 +35,19 @@ public class LoginController {
 	/** Message Source */
 	private final MessageSource messageSource;
 	
+	/** セッション情報 */
+	private final HttpSession session;
+	
 	@GetMapping()
 	public String view(Model model, LoginForm form) {
+		return "/authenticate/login";
+	}
+	
+	@GetMapping(params = "error")
+	public String viewWithError(Model model, LoginForm form) {
+		var errorInfo = (Exception)session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+		model.addAttribute("message", errorInfo.getMessage());
+		model.addAttribute("isError", true);
 		return "/authenticate/login";
 	}
 	
