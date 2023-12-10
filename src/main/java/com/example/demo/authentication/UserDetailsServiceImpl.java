@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private int lockingTime;
 	
 	/** アカウントロックとなるログイン失敗回数 */
-	@Value("${security.locking-border-time}")
+	@Value("${security.locking-border-count}")
 	private int lockingBorderCount;
 	
 	@Override
@@ -40,7 +40,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		LocalDateTime accountLockedTime = user.getAccountLockedTime();
 		boolean isAccountLocked = accountLockedTime != null
 				&& accountLockedTime.plusMinutes(lockingTime).isAfter(LocalDateTime.now());
-		
 		
 		return User.withUsername(user.getEmail())
 				.password(user.getPassword())
@@ -70,7 +69,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 	
 	/**
-	 * 
+	 * 認証成功時にログイン失敗回数とアカウント日時をリセット
 	 * 
 	 * @param event 認証成功イベント(AuthenticationSuccessEvent)
 	 */
