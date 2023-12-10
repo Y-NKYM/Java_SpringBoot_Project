@@ -1,16 +1,22 @@
 package com.example.demo.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="user")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserInfo {
 	
 	@Id
@@ -21,4 +27,27 @@ public class UserInfo {
 	private String email;
 	private String password;
 	
+	/** ログイン失敗回数 */
+	@Column(name="login_failure_count")
+	private int loginFailureCount;
+	
+	/** アカウントロック日時 */
+	@Column(name="account_locked_time")
+	private LocalDateTime accountLockedTime;
+	
+	/** アカウントの利用可否（trueなら利用可能） */
+	@Column(name="is_disabled")
+	private boolean isDisabled;
+	
+	public UserInfo incrementLoginFailureCount() {
+		return new UserInfo(userId, name, email, password, ++loginFailureCount, accountLockedTime, isDisabled);
+	} 
+	
+	public UserInfo updateAccountLocked() {
+		return new UserInfo(userId, name, email, password, 0, LocalDateTime.now(), isDisabled);
+	}
+	
+	public UserInfo resetLoginFailureInfo() {
+		return new UserInfo(userId, name, email, password, 0, null, isDisabled);
+	}
 }
