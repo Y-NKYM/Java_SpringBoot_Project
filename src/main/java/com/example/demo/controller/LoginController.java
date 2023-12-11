@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.LoginMessage;
 import com.example.demo.constant.UrlConst;
+import com.example.demo.constant.ViewHtmlConst;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.LoginForm;
 import com.example.demo.service.LoginService;
@@ -48,7 +49,7 @@ public class LoginController {
 		var errorInfo = (Exception)session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 		model.addAttribute("message", errorInfo.getMessage());
 		model.addAttribute("isError", true);
-		return "/authenticate/login";
+		return ViewHtmlConst.LOGIN;
 	}
 	
 	@PostMapping()
@@ -69,7 +70,7 @@ public class LoginController {
 		if(isCorrectUserAuth) {
 			return "/user/mypage";
 		}else {
-			return "/authenticate/login";
+			return ViewHtmlConst.LOGIN;
 		}
 	}
 	

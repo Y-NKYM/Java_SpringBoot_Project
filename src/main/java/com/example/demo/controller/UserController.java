@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.AuthorityKind;
 import com.example.demo.constant.UrlConst;
+import com.example.demo.constant.ViewHtmlConst;
 
 @Controller
 @RequestMapping(UrlConst.USER)
@@ -26,6 +27,6 @@ public class UserController {
 		model.addAttribute("hasAdminAuth", hasAdminAuth);
 		
 		
-		return "/user/mypage";
+		return ViewHtmlConst.USER_MYPAGE;
 	}
 }

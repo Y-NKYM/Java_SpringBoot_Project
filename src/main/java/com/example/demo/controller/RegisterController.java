@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.RegisterMessage;
 import com.example.demo.constant.UrlConst;
+import com.example.demo.constant.ViewHtmlConst;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.service.RegisterService;
@@ -33,23 +34,23 @@ public class RegisterController {
 	
 	@GetMapping()
 	public String view(Model model, RegisterForm form) {
-		return "/authenticate/register";
+		return ViewHtmlConst.REGISTER;
 	}
 	
 	@PostMapping()
 	public String register(Model model,@Validated RegisterForm form, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			storeMessage(model, RegisterMessage.FAILED.getMessageId(), true);
-			return "/authenticate/register";
+			return ViewHtmlConst.REGISTER;
 		}
 		
 		Optional<UserInfo> user = service.registerUser(form);
 		RegisterMessage registerMessage = chooseMessage(user);
 		storeMessage(model, registerMessage.getMessageId(), registerMessage.isError());
 		if(user.isEmpty()) {
-			return "/authenticate/register";
+			return ViewHtmlConst.REGISTER;
 		} else {
-			return "/user/mypage";
+			return ViewHtmlConst.USER_MYPAGE;
 		}
 	}
 	
