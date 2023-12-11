@@ -2,7 +2,13 @@ package com.example.demo.entity;
 
 import java.time.LocalDateTime;
 
+import com.example.demo.constant.AuthorityKind;
+import com.example.demo.constant.UserStatusKind;
+import com.example.demo.entity.converter.UserAuthorityConverter;
+import com.example.demo.entity.converter.UserStatusConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,21 +43,22 @@ public class UserInfo {
 	
 	/** アカウントの利用可否（trueなら利用可能） */
 	@Column(name="is_disabled")
-	private boolean isDisabled;
+	@Convert(converter = UserStatusConverter.class)
+	private UserStatusKind status;
 	
 	/** ユーザー権限 */
-	@Column(name="authority")
-	private String authority;
+	@Convert(converter = UserAuthorityConverter.class)
+	private AuthorityKind authority;
 	
 	public UserInfo incrementLoginFailureCount() {
-		return new UserInfo(userId, name, email, password, ++loginFailureCount, accountLockedTime, isDisabled, authority);
+		return new UserInfo(userId, name, email, password, ++loginFailureCount, accountLockedTime, status, authority);
 	} 
 	
 	public UserInfo updateAccountLocked() {
-		return new UserInfo(userId, name, email, password, 0, LocalDateTime.now(), isDisabled, authority);
+		return new UserInfo(userId, name, email, password, 0, LocalDateTime.now(), status, authority);
 	}
 	
 	public UserInfo resetLoginFailureInfo() {
-		return new UserInfo(userId, name, email, password, 0, null, isDisabled, authority);
+		return new UserInfo(userId, name, email, password, 0, null, status, authority);
 	}
 }

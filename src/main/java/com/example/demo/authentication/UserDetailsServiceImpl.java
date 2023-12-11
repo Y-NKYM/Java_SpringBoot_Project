@@ -43,9 +43,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		return User.withUsername(user.getEmail())
 				.password(user.getPassword())
-				.authorities(user.getAuthority())
+				.authorities(user.getAuthority().getAuthorityCode())
 				
-				.disabled(user.isDisabled())
+				.disabled(user.getStatus().isDisabled())
 				.accountLocked(isAccountLocked)
 				.build();
 	}

@@ -32,7 +32,7 @@ public class RegisterServiceImpl implements RegisterService{
 		UserInfo user = mapper.map(form, UserInfo.class);
 		String encodedPassword = passwordEncoder.encode(form.getPassword());
 		user.setPassword(encodedPassword);
-		user.setAuthority(AuthorityKind.ADMIN_AUTHORITY.getAuthorityCode());
+		user.setAuthority(AuthorityKind.ADMIN_AUTHORITY);
 		
 		return Optional.of(repository.save(user));
 	}
