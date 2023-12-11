@@ -8,5 +8,10 @@
 	<div th:replace="~{partial/navbar::navbar-auth}"></div>
 	<div th:insert="~{partial/alert::alert}"></div>
 	Mypage
+	<th:block th:if="${hasAdminAuth}">
+		<div>
+			<a class="btn btn-info">管理者画面</a>
+		</div>
+	</th:block>
 </body>
 </html>
