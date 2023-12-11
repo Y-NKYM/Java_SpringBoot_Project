@@ -9,5 +9,15 @@
 			</form>
 		</div>
 	</nav>
+	
+	<nav class="navbar bg-secondary" th:fragment="navbar-auth">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="@{/}">Navbar</a>
+			<form action="@{/logout}" method="post">
+				<span class="text-light" th:text="${#authentication.principal.username}">username</span>
+				<input type="submit" class="btn btn-light" value="ログアウト">
+			</form>
+		</div>
+	</nav>
 </body>
 </html>
