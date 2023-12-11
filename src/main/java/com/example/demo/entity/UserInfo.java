@@ -39,15 +39,19 @@ public class UserInfo {
 	@Column(name="is_disabled")
 	private boolean isDisabled;
 	
+	/** ユーザー権限 */
+	@Column(name="authority")
+	private String authority;
+	
 	public UserInfo incrementLoginFailureCount() {
-		return new UserInfo(userId, name, email, password, ++loginFailureCount, accountLockedTime, isDisabled);
+		return new UserInfo(userId, name, email, password, ++loginFailureCount, accountLockedTime, isDisabled, authority);
 	} 
 	
 	public UserInfo updateAccountLocked() {
-		return new UserInfo(userId, name, email, password, 0, LocalDateTime.now(), isDisabled);
+		return new UserInfo(userId, name, email, password, 0, LocalDateTime.now(), isDisabled, authority);
 	}
 	
 	public UserInfo resetLoginFailureInfo() {
-		return new UserInfo(userId, name, email, password, 0, null, isDisabled);
+		return new UserInfo(userId, name, email, password, 0, null, isDisabled, authority);
 	}
 }
