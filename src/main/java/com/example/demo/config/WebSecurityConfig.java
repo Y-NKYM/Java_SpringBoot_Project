@@ -40,10 +40,13 @@ public class WebSecurityConfig {
 				.requestMatchers(UrlConst.NO_AUTH).permitAll()
 				.anyRequest().authenticated()
 				)
-				.formLogin(login -> login
+			.formLogin(login -> login
 				.loginPage(UrlConst.LOGIN)
 				.usernameParameter(USERNAME_PARAMETER)
 				.defaultSuccessUrl(UrlConst.USER)
+				)
+			.logout(logout -> logout
+				.logoutSuccessUrl(UrlConst.LOGIN)
 				);
 		
 		return http.build();	
