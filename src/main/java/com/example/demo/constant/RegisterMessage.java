@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RegisterMessage {
 	SUCCEED(MessageConst.REGISTER_SUCCEED, false),
-	FAILED(MessageConst.REGISTER_FAILED, true);
+	EXIST_EMAIL_FAILED(MessageConst.REGISTER_EXIST_EMAIL_FAILED, true),
+	VALIDATE_FAILED(MessageConst.REGISTER_VALIDATE_FAILED, true);
 	
 	private String messageId;
 	private boolean isError;

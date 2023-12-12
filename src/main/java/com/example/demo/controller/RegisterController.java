@@ -19,6 +19,7 @@ import com.example.demo.form.RegisterForm;
 import com.example.demo.service.RegisterService;
 import com.example.demo.util.AppUtil;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -32,15 +33,17 @@ public class RegisterController {
 	/** Message Source */
 	private final MessageSource messageSource;
 	
+	
+	
 	@GetMapping()
 	public String view(Model model, RegisterForm form) {
 		return ViewHtmlConst.REGISTER;
 	}
 	
 	@PostMapping()
-	public String register(Model model,@Validated RegisterForm form, BindingResult bindingResult) {
+	public String register(HttpServletRequest request, Model model,@Validated RegisterForm form, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
-			storeMessage(model, RegisterMessage.FAILED.getMessageId(), true);
+			storeMessage(model, RegisterMessage.VALIDATE_FAILED.getMessageId(), true);
 			return ViewHtmlConst.REGISTER;
 		}
 		
@@ -62,10 +65,12 @@ public class RegisterController {
 	
 	private RegisterMessage chooseMessage(Optional<UserInfo> user) {
 		if(user.isEmpty()) {
-			return RegisterMessage.FAILED;
+			return RegisterMessage.EXIST_EMAIL_FAILED;
 		} else {
 			
 			return RegisterMessage.SUCCEED;
 		}
 	}
+	
+	
 }
