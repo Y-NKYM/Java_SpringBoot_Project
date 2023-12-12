@@ -10,5 +10,6 @@ public class MessageConst {
 	
 	/** 新規登録画面 */
 	public static final String REGISTER_SUCCEED = "register.succeed";
-	public static final String REGISTER_FAILED = "register.failed";
+	public static final String REGISTER_EXIST_EMAIL_FAILED = "register.exist-email-failed";
+	public static final String REGISTER_VALIDATE_FAILED = "register.validate-failed";
 }
