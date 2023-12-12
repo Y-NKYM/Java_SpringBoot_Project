@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.constant.AuthorityKind;
+import com.example.demo.constant.UserStatusKind;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.repository.UserRepository;
@@ -32,7 +33,8 @@ public class RegisterServiceImpl implements RegisterService{
 		UserInfo user = mapper.map(form, UserInfo.class);
 		String encodedPassword = passwordEncoder.encode(form.getPassword());
 		user.setPassword(encodedPassword);
-		user.setAuthority(AuthorityKind.ADMIN_AUTHORITY);
+		user.setStatus(UserStatusKind.ENABLED);
+		user.setAuthority(AuthorityKind.USER_AUTHORITY);
 		
 		return Optional.of(repository.save(user));
 	}
