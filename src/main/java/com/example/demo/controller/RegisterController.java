@@ -1,8 +1,17 @@
 package com.example.demo.controller;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +29,7 @@ import com.example.demo.service.RegisterService;
 import com.example.demo.util.AppUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -33,7 +43,9 @@ public class RegisterController {
 	/** Message Source */
 	private final MessageSource messageSource;
 	
+	private final AuthenticationManager authenticationManager;
 	
+	private final SecurityContextRepository securityContextRepository;
 	
 	@GetMapping()
 	public String view(Model model, RegisterForm form) {
@@ -41,7 +53,7 @@ public class RegisterController {
 	}
 	
 	@PostMapping()
-	public String register(HttpServletRequest request, Model model,@Validated RegisterForm form, BindingResult bindingResult) {
+	public String register(HttpServletRequest request, HttpServletResponse response, Model model,@Validated RegisterForm form, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			storeMessage(model, RegisterMessage.VALIDATE_FAILED.getMessageId(), true);
 			return ViewHtmlConst.REGISTER;
@@ -53,7 +65,22 @@ public class RegisterController {
 		if(user.isEmpty()) {
 			return ViewHtmlConst.REGISTER;
 		} else {
-			return ViewHtmlConst.USER_MYPAGE;
+			
+			String username = user.get().getEmail();
+			String password = form.getPassword();
+			
+			List<GrantedAuthority> authorities = new ArrayList<>();
+			authorities.add(new SimpleGrantedAuthority("1"));
+			
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password, authorities);
+			Authentication authentication = authenticationManager.authenticate(token);
+					
+			SecurityContext context = SecurityContextHolder.createEmptyContext();
+			context.setAuthentication(authentication);
+			SecurityContextHolder.setContext(context);
+			securityContextRepository.saveContext(context, request, response);
+			
+		    return "redirect:/user";
 		}
 	}
 	
