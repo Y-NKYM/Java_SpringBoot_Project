@@ -9,7 +9,7 @@
 	<div th:insert="~{partial/alert::alert}"></div>
 	Mypage
 	
-	<div th:each="list, stat : ${toDoList}">
+	<div th:each="list, stat : ${toDoLists}">
 	<p th:text="${list.title}"></p>
 	</div>
 	
@@ -21,10 +21,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="list, stat : ${toDoList}">
-				<td th:text="${list.title}"></td>
-				<td th:text="${list.status.getDisplayValue}"></td>
-			</tr>
 		</tbody>
 	</table>
 	
