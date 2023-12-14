@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.example.demo.constant.AuthorityKind;
 import com.example.demo.constant.UserStatusKind;
@@ -13,6 +14,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,15 +52,20 @@ public class UserInfo {
 	@Convert(converter = UserAuthorityConverter.class)
 	private AuthorityKind authority;
 	
+	@OneToMany(mappedBy="user")
+	private List<ToDoListInfo> toDoLists;
+	
 	public UserInfo incrementLoginFailureCount() {
-		return new UserInfo(userId, name, email, password, ++loginFailureCount, accountLockedTime, status, authority);
+		return new UserInfo(userId, name, email, password, ++loginFailureCount, accountLockedTime, status, authority, toDoLists);
 	} 
 	
 	public UserInfo updateAccountLocked() {
-		return new UserInfo(userId, name, email, password, 0, LocalDateTime.now(), status, authority);
+		return new UserInfo(userId, name, email, password, 0, LocalDateTime.now(), status, authority, toDoLists);
 	}
 	
 	public UserInfo resetLoginFailureInfo() {
-		return new UserInfo(userId, name, email, password, 0, null, status, authority);
+		return new UserInfo(userId, name, email, password, 0, null, status, authority, toDoLists);
 	}
+	
+	
 }
