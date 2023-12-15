@@ -12,4 +12,10 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ToDoListServiceImpl implements ToDoListService{
+	private final ToDoListRepository repository;
+	
+	@Override
+	public List<ToDoListInfo> getToDoLists(){
+		return repository.findAll();
+	}
 }

@@ -13,6 +13,11 @@
 	<p th:text="${list.title}"></p>
 	</div>
 	
+	<div th:each="test, stat : ${tests}">
+	<p th:text="${test.title}"></p>
+	<p th:text="${test.user.email}"></p>
+	</div>
+	
 	<table>
 		<thead>
 			<tr>

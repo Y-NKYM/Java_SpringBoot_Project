@@ -14,6 +14,7 @@ import com.example.demo.constant.AuthorityKind;
 import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.ViewHtmlConst;
 import com.example.demo.entity.UserInfo;
+import com.example.demo.service.ToDoListService;
 import com.example.demo.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,11 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class UserController {
 	
-	/** ログイン画面Service */
+	/** UserService */
 	private final UserService userService;
+	
+	/** ToDoListService */
+	private final ToDoListService toDoListService;
 	
 	@GetMapping()
 	public String view(@AuthenticationPrincipal User authUser, Model model) {
@@ -40,11 +44,15 @@ public class UserController {
 		
 		Optional<UserInfo> user = userService.searchUserByEmail(authUser.getUsername());
 		var userInfo = user.get();
-		var toDoLists = userInfo.getToDoLists();
-		int listSize = toDoLists.size();
+		var userToDoList = userInfo.getToDoLists();
+		int listSize = userToDoList.size();
+		
+		var testAll = toDoListService.getToDoLists();
+		var testPart = testAll.size();
+		model.addAttribute("tests", testAll);
 		
 		model.addAttribute("user", userInfo);
-		model.addAttribute("toDoLists", toDoLists);
+		model.addAttribute("toDoLists", userToDoList);
 		
 		
 		return ViewHtmlConst.USER_MYPAGE;
