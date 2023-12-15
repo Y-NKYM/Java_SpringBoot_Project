@@ -43,17 +43,15 @@ public class UserController {
 		model.addAttribute("hasAdminAuth", hasAdminAuth);
 		
 		Optional<UserInfo> user = userService.searchUserByEmail(authUser.getUsername());
-		var userInfo = user.get();
-		var userToDoList = userInfo.getToDoLists();
-		int listSize = userToDoList.size();
+		UserInfo userInfo = user.get();
+		if(!userInfo.getToDoLists().isEmpty()){
+			model.addAttribute("user", userInfo);
+		}
 		
-		var testAll = toDoListService.getToDoLists();
-		var testPart = testAll.size();
-		model.addAttribute("tests", testAll);
-		
-		model.addAttribute("user", userInfo);
-		model.addAttribute("toDoLists", userToDoList);
-		
+		var toDoLists = toDoListService.getToDoLists();
+		if(!toDoLists.isEmpty()) {
+			model.addAttribute("toDoLists", toDoLists);
+		}
 		
 		return ViewHtmlConst.USER_MYPAGE;
 	}
