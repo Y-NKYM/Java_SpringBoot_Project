@@ -7,27 +7,32 @@
 <body>
 	<div th:replace="~{partial/navbar::navbar-auth}"></div>
 	<div th:insert="~{partial/alert::alert}"></div>
-	Mypage
-	
-	<div th:each="list, stat : ${toDoLists}">
-	<p th:text="${list.title}"></p>
-	</div>
-	
-	<div th:each="test, stat : ${tests}">
-	<p th:text="${test.title}"></p>
-	<p th:text="${test.user.email}"></p>
-	</div>
-	
-	<table>
-		<thead>
-			<tr>
-				<td></td>
-				<td></td>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
+
+	<div clas="container-fluid">
+		<div class="m-5">
+			<h2 th:text="|${user.name}様のTO DO LIST|"></h2>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th class="text-center" scope="col"></th>
+						<th class="text-center" scope="col">タイトル</th>
+						<th class="text-center" scope="col">進捗</th>
+						<th class="text-center" scope="col">カテゴリー</th>
+						<th class="text-center" scope="col">作成日</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="list, stat : ${user.toDoLists}">
+						<th scope="row" th:text="${stat.count}"></th>
+						<td class="text-center" th:text="${list.title}"></td>
+						<td class="text-center" th:text="${list.status.displayValue}"></td>
+						<td class="text-center" th:text="${list.categoryId}"></td>
+						<td class="text-center" th:text="${#temporals.format(list.createdTime, 'yyyy-MM-dd HH:mm')}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>	
 	
 	<th:block th:if="${hasAdminAuth}">
 		<div>
