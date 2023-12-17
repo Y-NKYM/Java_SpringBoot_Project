@@ -12,4 +12,8 @@ public class MessageConst {
 	public static final String REGISTER_SUCCEED = "register.succeed";
 	public static final String REGISTER_EXIST_EMAIL_FAILED = "register.exist-email-failed";
 	public static final String REGISTER_VALIDATE_FAILED = "register.validate-failed";
+	
+	/** 新規リスト登録 */
+	public static final String TODOLIST_SUCCEED = "todolist.succeed";
+	public static final String TODOLIST_FAILED = "todolist.failed";
 }
