@@ -13,4 +13,7 @@ public class ViewHtmlConst {
 	
 	/** マイページ */
 	public static final String USER_MYPAGE = "/user/mypage";
+	
+	/** ToDo新規登録 */
+	public static final String TODO_NEW = "/todolist/new";
 }

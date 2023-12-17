@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form th:action="@{/todolist/create}" method="post" th:object="${toDoListForm}">
+		<input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
+		<div class="mt-3">
+			<label for="title" class="form-label">タイトル</label>
+			<input type="text" th:field="*{title}" class="form-control">
+		</div>
+		<div class="mt-3">
+			<label for="body" class="form-label">内容</label>
+			<input type="text" th:field="*{body}" class="form-control">
+		</div>
+		<select th:field="*{categoryId}">
+				<option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}"> </option>
+		</select>
+	
+		<div class="mt-3">
+			<button class="btn btn-primary">登録</button>
+		</div>
+	</form>
+</body>
+</html>

@@ -32,7 +32,9 @@ public class ToDoListInfo {
 	private String title;
 	private String body;
 	
-	private String categoryId;
+	@ManyToOne
+	@JoinColumn(name="category_id")
+	private CategoryInfo category;
 	
 	@Column(name="task_status")
 	@Convert(converter = ListStatusConverter.class)
