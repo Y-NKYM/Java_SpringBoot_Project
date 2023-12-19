@@ -7,7 +7,28 @@
 <body>
 	<div th:replace="~{partial/navbar::navbar-auth}"></div>
 	<div th:insert="~{partial/alert::alert}"></div>
-
+	
+	<div class="text-center my-3">
+		<form th:action="@{/todolist}" method="post">
+			<div class="row g-3 justify-content-center">
+				<div class="col-4">
+					<select name="column" class="form-select">
+						<option th:each="m: ${map}" th:value="${m.getValue()}" th:text="${m.getKey()}"></option>
+					</select>
+				</div>
+				<div class="col-4">
+					<select name="order" class="form-select">
+						<option value="asc">昇順</option>
+						<option value="desc">降順</option>
+					</select>
+				</div>
+				<div class="col-auto">
+					<button name="search" class="btn btn-primary">検索</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	
 	<div clas="container-fluid">
 		<div class="m-5">
 			<h2 th:text="|${user.name}様のTO DO LIST|"></h2>

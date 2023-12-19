@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,7 +35,17 @@ public class UserController {
 	
 	@GetMapping()
 	public String view(@AuthenticationPrincipal User authUser, Model model) {
+		Map<String, String> map = new LinkedHashMap<>();
+		map.put("タイトル", "title");
+		map.put("作成日", "created_time");
 		
+		System.out.println(map.entrySet());
+		for(Map.Entry<String, String> m : map.entrySet()) {
+			System.out.println(m.getValue());
+			System.out.println(m.getKey());
+		}
+		model.addAttribute("map", map);
+
 		/**
 		 * 管理者権限を持っているかをboolean型で判断します。
 		 */

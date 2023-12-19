@@ -17,6 +17,7 @@ import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.ViewHtmlConst;
 import com.example.demo.entity.CategoryInfo;
 import com.example.demo.entity.ToDoListInfo;
+import com.example.demo.form.SearchForm;
 import com.example.demo.form.ToDoListForm;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ToDoListService;
@@ -52,6 +53,11 @@ public class ToDoListController {
 		ToDoListMessage toDoListMessage = chooseMessage(toDoList);
 		storeMessage(model, toDoListMessage.getMessageId(), toDoListMessage.isError());
 		return "redirect:/user";
+	}
+	
+	@PostMapping(params="search")
+	public void search(Model model, SearchForm form) {
+		System.out.println(form.toString());
 	}
 	
 	private void storeMessage(Model model, String messageId, boolean isError) {
