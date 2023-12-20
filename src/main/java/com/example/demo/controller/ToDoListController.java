@@ -18,7 +18,7 @@ import com.example.demo.constant.ViewHtmlConst;
 import com.example.demo.entity.CategoryInfo;
 import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.form.SearchForm;
-import com.example.demo.form.ToDoListForm;
+import com.example.demo.form.ToDoListNewForm;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ToDoListService;
 import com.example.demo.util.AppUtil;
@@ -40,14 +40,14 @@ public class ToDoListController {
 	private final MessageSource messageSource;
 	
 	@GetMapping()
-	public String view(Model model, ToDoListForm form) {
+	public String view(Model model, ToDoListNewForm form) {
 		List<CategoryInfo> categories = categoryService.getCategories();
 		model.addAttribute("categories", categories);
 		return ViewHtmlConst.TODO_NEW;
 	}
 	
 	@PostMapping("/create")
-	public String create(@AuthenticationPrincipal User authUser, Model model, ToDoListForm form) {
+	public String create(@AuthenticationPrincipal User authUser, Model model, ToDoListNewForm form) {
 		Optional<ToDoListInfo> toDoList = toDoListService.createToDoList(form);
 		
 		ToDoListMessage toDoListMessage = chooseMessage(toDoList);

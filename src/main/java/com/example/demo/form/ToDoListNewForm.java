@@ -3,7 +3,7 @@ package com.example.demo.form;
 import lombok.Data;
 
 @Data
-public class ToDoListForm {
+public class ToDoListNewForm {
 
 	private String userId;
 	private String title;

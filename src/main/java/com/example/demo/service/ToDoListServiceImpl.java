@@ -10,7 +10,7 @@ import com.example.demo.constant.ListStatusKind;
 import com.example.demo.entity.CategoryInfo;
 import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.entity.UserInfo;
-import com.example.demo.form.ToDoListForm;
+import com.example.demo.form.ToDoListNewForm;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ToDoListRepository;
 import com.example.demo.repository.UserRepository;
@@ -36,7 +36,7 @@ public class ToDoListServiceImpl implements ToDoListService{
 	}
 	
 	@Override
-	public Optional<ToDoListInfo> createToDoList(ToDoListForm form){
+	public Optional<ToDoListInfo> createToDoList(ToDoListNewForm form){
 		Optional<UserInfo> existedUser = userRepository.findByEmail(form.getUserId());
 		Optional<CategoryInfo> existedCategory = categoryRepository.findById(form.getCategoryId());
 		//ユーザーまたはカテゴリーが存在していない場合

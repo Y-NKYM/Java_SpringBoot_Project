@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.entity.ToDoListInfo;
-import com.example.demo.form.ToDoListForm;
+import com.example.demo.form.ToDoListNewForm;
 
 public interface ToDoListService {
 	/**
@@ -12,5 +12,5 @@ public interface ToDoListService {
 	 * @return ユーザー情報テーブルの全登録情報の配列
 	 */
 	public List<ToDoListInfo> getToDoLists();
-	public Optional<ToDoListInfo> createToDoList(ToDoListForm form);
+	public Optional<ToDoListInfo> createToDoList(ToDoListNewForm form);
 }
