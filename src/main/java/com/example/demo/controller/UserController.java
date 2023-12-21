@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -10,11 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.AuthorityKind;
 import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.ViewHtmlConst;
+import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.service.ToDoListService;
 import com.example.demo.service.UserService;
@@ -34,7 +37,7 @@ public class UserController {
 	private final ToDoListService toDoListService;
 	
 	@GetMapping()
-	public String view(@AuthenticationPrincipal User authUser, Model model) {
+	public String view(@ModelAttribute("list") ArrayList<ToDoListInfo> list ,@AuthenticationPrincipal User authUser, Model model) {
 		Map<String, String> map = new LinkedHashMap<>();
 		map.put("タイトル", "title");
 		map.put("作成日", "created_time");
