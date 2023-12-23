@@ -10,6 +10,7 @@ import com.example.demo.constant.ListStatusKind;
 import com.example.demo.entity.CategoryInfo;
 import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.entity.UserInfo;
+import com.example.demo.form.SearchForm;
 import com.example.demo.form.ToDoListNewForm;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ToDoListRepository;
@@ -36,6 +37,11 @@ public class ToDoListServiceImpl implements ToDoListService{
 	}
 	
 	@Override
+	public List<ToDoListInfo> searchToDoListsByParam(SearchForm form){
+		return toDoListRepository.findByOrderByTitleAsc();
+	}
+	
+	@Override
 	public Optional<ToDoListInfo> createToDoList(ToDoListNewForm form){
 		Optional<UserInfo> existedUser = userRepository.findByEmail(form.getUserId());
 		Optional<CategoryInfo> existedCategory = categoryRepository.findById(form.getCategoryId());
@@ -52,5 +58,7 @@ public class ToDoListServiceImpl implements ToDoListService{
 		toDoList.setUpdatedTime(LocalDateTime.now());
 		return Optional.of(toDoListRepository.save(toDoList));
 	}
+	
+	
 	
 }
