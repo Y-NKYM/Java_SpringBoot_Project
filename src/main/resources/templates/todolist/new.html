@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<div th:replace="~{partial/head::head}"></div>
+	<title>Insert title here</title>
 </head>
 <body>
-	<form th:action="@{/todolist/create}" method="post" th:object="${toDoListForm}">
+	<div th:replace="~{partial/navbar::navbar-auth}"></div>
+	<form th:action="@{/todolist/create}" method="post" th:object="${toDoListNewForm}">
 		<input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
 		<div class="mt-3">
 			<label for="title" class="form-label">タイトル</label>

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.constant.ToDoListMessage;
 import com.example.demo.constant.UrlConst;
@@ -56,8 +57,13 @@ public class ToDoListController {
 	}
 	
 	@PostMapping(params="search")
-	public void search(Model model, SearchForm form) {
-		System.out.println(form.toString());
+	public String search(RedirectAttributes redirectAttributes, Model model, SearchForm form) {
+		
+		List<ToDoListInfo> todoLists = toDoListService.searchToDoListsByParam(form);
+		todoLists.forEach(t -> System.out.println(t.getTitle()));
+		//リストを/userＵＲＬに渡す
+		redirectAttributes.addFlashAttribute("list", todoLists);
+		return "redirect:/user";
 	}
 	
 	private void storeMessage(Model model, String messageId, boolean isError) {

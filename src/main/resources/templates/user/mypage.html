@@ -23,6 +23,7 @@
 					</select>
 				</div>
 				<div class="col-auto">
+					<input name="email" th:value="${#authentication.principal.username}" hidden>
 					<button name="search" class="btn btn-primary">検索</button>
 				</div>
 			</div>
