@@ -63,6 +63,11 @@ public class UserController {
 			model.addAttribute("user", userInfo);
 		}
 		
+		//タスク：
+		//特定のユーザーのToDoList一覧である上での並び替えを行う必要あり。
+		//HTMLのuser.toDoListsをせず、toDoListを一つの変数としてHTMLに渡す事で並び替えをしやすくする。
+		//別ページ遷移時のメッセージをRedirectAttributeで行う。
+		
 		var toDoLists = toDoListService.getToDoLists();
 		if(!toDoLists.isEmpty()) {
 			model.addAttribute("toDoLists", toDoLists);
