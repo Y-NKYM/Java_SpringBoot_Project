@@ -45,7 +45,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="list, stat : ${user.toDoLists}">
+					<tr th:each="list, stat : ${toDoLists}">
 						<th scope="row" th:text="${stat.count}"></th>
 						<td class="text-center" th:text="${list.title}"></td>
 						<td class="text-center" th:text="${list.status.displayValue}"></td>
