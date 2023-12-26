@@ -18,10 +18,12 @@ import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.ViewHtmlConst;
 import com.example.demo.entity.CategoryInfo;
 import com.example.demo.entity.ToDoListInfo;
+import com.example.demo.entity.UserInfo;
 import com.example.demo.form.SearchForm;
 import com.example.demo.form.ToDoListNewForm;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ToDoListService;
+import com.example.demo.service.UserService;
 import com.example.demo.util.AppUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class ToDoListController {
 	
 	/** ToDoListService */
+	private final UserService userService;
 	private final ToDoListService toDoListService;
 	
 	/** CategoryService */
@@ -57,11 +60,10 @@ public class ToDoListController {
 	}
 	
 	@PostMapping(params="search")
-	public String search(RedirectAttributes redirectAttributes, Model model, SearchForm form) {
+	public String search(@AuthenticationPrincipal User authUser, RedirectAttributes redirectAttributes, Model model, SearchForm form) {
+		Optional<UserInfo> user = userService.searchUserByEmail(authUser.getUsername());
 		
-		List<ToDoListInfo> todoLists = toDoListService.searchToDoListsByParam(form);
-		todoLists.forEach(t -> System.out.println(t.getTitle()));
-		//リストを/userＵＲＬに渡す
+		List<ToDoListInfo> todoLists = toDoListService.orderUserToDoLists(form, user.get());
 		redirectAttributes.addFlashAttribute("list", todoLists);
 		return "redirect:/user";
 	}

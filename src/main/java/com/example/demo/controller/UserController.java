@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -68,9 +69,11 @@ public class UserController {
 		//HTMLのuser.toDoListsをせず、toDoListを一つの変数としてHTMLに渡す事で並び替えをしやすくする。
 		//別ページ遷移時のメッセージをRedirectAttributeで行う。
 		
-		var toDoLists = toDoListService.getToDoLists();
-		if(!toDoLists.isEmpty()) {
+		if(list.isEmpty()) {
+			List<ToDoListInfo> toDoLists = toDoListService.getToDoLists();
 			model.addAttribute("toDoLists", toDoLists);
+		}else {
+			model.addAttribute("toDoLists", list);
 		}
 		
 		return ViewHtmlConst.USER_MYPAGE;
