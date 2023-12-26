@@ -42,6 +42,16 @@ public class ToDoListServiceImpl implements ToDoListService{
 	}
 	
 	@Override
+	public List<ToDoListInfo> orderUserToDoLists(SearchForm form, UserInfo user){
+		if(form.getColumn()=="title" && form.getOrder()=="asc") {
+			return toDoListRepository.findByUserOrderByTitleAsc(user);
+		}else {
+			return toDoListRepository.findByUserOrderByTitleAsc(user);
+		}
+		
+	}
+	
+	@Override
 	public Optional<ToDoListInfo> createToDoList(ToDoListNewForm form){
 		Optional<UserInfo> existedUser = userRepository.findByEmail(form.getUserId());
 		Optional<CategoryInfo> existedCategory = categoryRepository.findById(form.getCategoryId());

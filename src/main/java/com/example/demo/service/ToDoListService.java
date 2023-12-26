@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.entity.ToDoListInfo;
+import com.example.demo.entity.UserInfo;
 import com.example.demo.form.SearchForm;
 import com.example.demo.form.ToDoListNewForm;
 
@@ -15,4 +16,5 @@ public interface ToDoListService {
 	public List<ToDoListInfo> getToDoLists();
 	public List<ToDoListInfo> searchToDoListsByParam(SearchForm form);
 	public Optional<ToDoListInfo> createToDoList(ToDoListNewForm form);
+	public List<ToDoListInfo> orderUserToDoLists(SearchForm form, UserInfo user);
 }
