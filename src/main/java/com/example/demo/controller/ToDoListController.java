@@ -62,7 +62,6 @@ public class ToDoListController {
 	@PostMapping(params="search")
 	public String search(@AuthenticationPrincipal User authUser, RedirectAttributes redirectAttributes, Model model, SearchForm form) {
 		Optional<UserInfo> user = userService.searchUserByEmail(authUser.getUsername());
-		
 		List<ToDoListInfo> todoLists = toDoListService.orderUserToDoLists(form, user.get());
 		redirectAttributes.addFlashAttribute("list", todoLists);
 		return "redirect:/user";

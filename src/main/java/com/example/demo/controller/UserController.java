@@ -42,8 +42,6 @@ public class UserController {
 		Map<String, String> map = new LinkedHashMap<>();
 		map.put("タイトル", "title");
 		map.put("作成日", "created_time");
-		
-		System.out.println(map.entrySet());
 		for(Map.Entry<String, String> m : map.entrySet()) {
 			System.out.println(m.getValue());
 			System.out.println(m.getKey());
@@ -59,21 +57,22 @@ public class UserController {
 		model.addAttribute("hasAdminAuth", hasAdminAuth);
 		
 		Optional<UserInfo> user = userService.searchUserByEmail(authUser.getUsername());
-		UserInfo userInfo = user.get();
-		if(!userInfo.getToDoLists().isEmpty()){
+		if(!user.isEmpty()){
+			UserInfo userInfo = user.get();
 			model.addAttribute("user", userInfo);
-		}
+		
 		
 		//タスク：
 		//特定のユーザーのToDoList一覧である上での並び替えを行う必要あり。
 		//HTMLのuser.toDoListsをせず、toDoListを一つの変数としてHTMLに渡す事で並び替えをしやすくする。
 		//別ページ遷移時のメッセージをRedirectAttributeで行う。
 		
-		if(list.isEmpty()) {
-			List<ToDoListInfo> toDoLists = toDoListService.getToDoLists();
-			model.addAttribute("toDoLists", toDoLists);
-		}else {
-			model.addAttribute("toDoLists", list);
+			if(list.isEmpty()) {
+				List<ToDoListInfo> toDoLists = toDoListService.getUserToDoLists(userInfo);
+				model.addAttribute("toDoLists", toDoLists);
+			}else {
+				model.addAttribute("toDoLists", list);
+			}
 		}
 		
 		return ViewHtmlConst.USER_MYPAGE;

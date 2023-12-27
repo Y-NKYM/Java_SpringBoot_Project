@@ -32,23 +32,25 @@ public class ToDoListServiceImpl implements ToDoListService{
 	private final Mapper mapper;
 	
 	@Override
-	public List<ToDoListInfo> getToDoLists(){
-		return toDoListRepository.findAll();
-	}
-	
-	@Override
-	public List<ToDoListInfo> searchToDoListsByParam(SearchForm form){
-		return toDoListRepository.findByOrderByTitleAsc();
+	public List<ToDoListInfo> getUserToDoLists(UserInfo user){
+		return toDoListRepository.findByUser(user);
 	}
 	
 	@Override
 	public List<ToDoListInfo> orderUserToDoLists(SearchForm form, UserInfo user){
-		if(form.getColumn()=="title" && form.getOrder()=="asc") {
+		//タイトル・昇順
+		if(form.getColumn().equals("title") && form.getOrder().equals("asc")) {
 			return toDoListRepository.findByUserOrderByTitleAsc(user);
+		//タイトル・降順
+		}else if(form.getColumn().equals("title") && form.getOrder().equals("desc")) {
+			return toDoListRepository.findByUserOrderByTitleDesc(user);
+		//作成日・昇順
+		}else if(form.getColumn().equals("created_time") && form.getOrder().equals("asc")) {
+			return toDoListRepository.findByUserOrderByCreatedTimeAsc(user);
+		//作成日・降順
 		}else {
-			return toDoListRepository.findByUserOrderByTitleAsc(user);
+			return toDoListRepository.findByUserOrderByCreatedTimeDesc(user);
 		}
-		
 	}
 	
 	@Override
