@@ -20,6 +20,7 @@ import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.ViewHtmlConst;
 import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.entity.UserInfo;
+import com.example.demo.form.SearchForm;
 import com.example.demo.service.ToDoListService;
 import com.example.demo.service.UserService;
 
@@ -38,14 +39,10 @@ public class UserController {
 	private final ToDoListService toDoListService;
 	
 	@GetMapping()
-	public String view(@ModelAttribute("list") ArrayList<ToDoListInfo> list ,@AuthenticationPrincipal User authUser, Model model) {
+	public String view(@ModelAttribute("list") ArrayList<ToDoListInfo> list ,@ModelAttribute("searchKey") SearchForm form, @AuthenticationPrincipal User authUser, Model model) {
 		Map<String, String> map = new LinkedHashMap<>();
 		map.put("タイトル", "title");
 		map.put("作成日", "created_time");
-		for(Map.Entry<String, String> m : map.entrySet()) {
-			System.out.println(m.getValue());
-			System.out.println(m.getKey());
-		}
 		model.addAttribute("map", map);
 
 		/**
@@ -61,17 +58,12 @@ public class UserController {
 			UserInfo userInfo = user.get();
 			model.addAttribute("user", userInfo);
 		
-		
-		//タスク：
-		//特定のユーザーのToDoList一覧である上での並び替えを行う必要あり。
-		//HTMLのuser.toDoListsをせず、toDoListを一つの変数としてHTMLに渡す事で並び替えをしやすくする。
-		//別ページ遷移時のメッセージをRedirectAttributeで行う。
-		
 			if(list.isEmpty()) {
 				List<ToDoListInfo> toDoLists = toDoListService.getUserToDoLists(userInfo);
 				model.addAttribute("toDoLists", toDoLists);
 			}else {
 				model.addAttribute("toDoLists", list);
+				model.addAttribute("searchKey", form);
 			}
 		}
 		

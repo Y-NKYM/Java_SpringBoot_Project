@@ -33,6 +33,7 @@
 	<div clas="container-fluid">
 		<div class="m-5">
 			<h2 th:text="|${user.name}様のTO DO LIST|"></h2>
+			<p th:if="${searchKey.getEmail}" th:text="|並び替え項目：${searchKey.getColumn}、並び順：${searchKey.getOrder}|"></p>
 			<a th:href="@{/todolist}" class="btn btn-primary" th:text="新規登録"></a>
 			<table class="table table-hover">
 				<thead>

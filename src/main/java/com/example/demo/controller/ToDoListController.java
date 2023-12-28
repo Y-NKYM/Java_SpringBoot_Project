@@ -64,6 +64,7 @@ public class ToDoListController {
 		Optional<UserInfo> user = userService.searchUserByEmail(authUser.getUsername());
 		List<ToDoListInfo> todoLists = toDoListService.orderUserToDoLists(form, user.get());
 		redirectAttributes.addFlashAttribute("list", todoLists);
+		redirectAttributes.addFlashAttribute("searchKey", form);
 		return "redirect:/user";
 	}
 	
