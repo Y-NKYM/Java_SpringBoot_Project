@@ -57,6 +57,11 @@ public class UserController {
 						.equals(AuthorityKind.ADMIN_AUTHORITY.getAuthorityCode()));
 		model.addAttribute("hasAdminAuth", hasAdminAuth);
 		
+		/**
+		 * ログインユーザー情報を取得し、@ModelAttributesのlist変数内が
+		 * ・空の場合、ユーザーのToDoList一覧を取得。
+		 * ・空でない場合、並び替え情報を基に並び替えたToDoList一覧を取得。
+		 */
 		Optional<UserInfo> user = userService.searchUserByEmail(authUser.getUsername());
 		if(!user.isEmpty()){
 			UserInfo userInfo = user.get();

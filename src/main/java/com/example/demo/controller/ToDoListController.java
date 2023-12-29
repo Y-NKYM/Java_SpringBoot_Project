@@ -59,8 +59,16 @@ public class ToDoListController {
 		return "redirect:/user";
 	}
 	
+	/**
+	 * ToDoListの並び順を変更し、マイページへリダイレクトする。
+	 * 
+	 * @param authUser　ログインユーザー情報を取得する。
+	 * @param redirectAttributes　並び替えたToDoListと並び替え情報をリダイレクトするため。
+	 * @param form　HTMLから並び替え情報を取得する。
+	 * @return　"/user"へリダイレクト。
+	 */
 	@PostMapping(params="search")
-	public String search(@AuthenticationPrincipal User authUser, RedirectAttributes redirectAttributes, Model model, SearchForm form) {
+	public String search(@AuthenticationPrincipal User authUser, RedirectAttributes redirectAttributes, SearchForm form) {
 		Optional<UserInfo> user = userService.searchUserByEmail(authUser.getUsername());
 		List<ToDoListInfo> todoLists = toDoListService.orderUserToDoLists(form, user.get());
 		redirectAttributes.addFlashAttribute("list", todoLists);
