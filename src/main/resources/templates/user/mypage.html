@@ -7,19 +7,19 @@
 <body>
 	<div th:replace="~{partial/navbar::navbar-auth}"></div>
 	<div th:insert="~{partial/alert::alert}"></div>
-	
 	<div class="text-center my-3">
 		<form th:action="@{/todolist}" method="post">
 			<div class="row g-3 justify-content-center">
 				<div class="col-4">
 					<select name="column" class="form-select">
-						<option th:each="m: ${map}" th:value="${m.getValue()}" th:text="${m.getKey()}"></option>
+						<option th:if="${search}" th:each="column: ${toDoListColumn.values()}" th:value="${column.getValue}" th:text="${column.getDisplayValue}" th:selected="${selectedColumn.getValue}"></option>
+						<option th:unless="${search}" th:each="column: ${toDoListColumn.values()}" th:value="${column.getValue}" th:text="${column.getDisplayValue}"></option>
 					</select>
 				</div>
 				<div class="col-4">
 					<select name="order" class="form-select">
-						<option value="asc">昇順</option>
-						<option value="desc">降順</option>
+						<option th:if="${search}" th:each="order: ${searchOrder.values()}" th:value="${order.getValue}" th:text="${order.getDisplayValue}" th:selected="${selectedOrder.getValue}"></option>
+						<option th:unless="${search}" th:each="order: ${searchOrder.values()}" th:value="${order.getValue}" th:text="${order.getDisplayValue}"></option>
 					</select>
 				</div>
 				<div class="col-auto">
@@ -33,7 +33,7 @@
 	<div clas="container-fluid">
 		<div class="m-5">
 			<h2 th:text="|${user.name}様のTO DO LIST|"></h2>
-			<p th:if="${searchKey.getEmail}" th:text="|並び替え項目：${searchKey.getColumn}、並び順：${searchKey.getOrder}|"></p>
+			<p th:if="${search}" th:text="|並び替え項目：${selectedColumn.getDisplayValue}、並び順：${selectedOrder.getDisplayValue}|"></p>
 			<a th:href="@{/todolist}" class="btn btn-primary" th:text="新規登録"></a>
 			<table class="table table-hover">
 				<thead>
