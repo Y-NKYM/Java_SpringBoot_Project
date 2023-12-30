@@ -2,61 +2,78 @@
 <html>
 <head>
 	<div th:replace="~{partial/head::head}"></div>
-	<title>MyPage</title>
+	<title>マイリスト</title>
 </head>
 <body>
 	<div th:replace="~{partial/navbar::navbar-auth}"></div>
 	<div th:insert="~{partial/alert::alert}"></div>
-	<div class="text-center my-3">
-		<form th:action="@{/todolist}" method="post">
-			<div class="row g-3 justify-content-center">
-				<div class="col-4">
-					<select name="column" class="form-select">
-						<option th:if="${search}" th:each="column: ${toDoListColumn.values()}" th:value="${column.getValue}" th:text="${column.getDisplayValue}" th:selected="${selectedColumn.getValue}"></option>
-						<option th:unless="${search}" th:each="column: ${toDoListColumn.values()}" th:value="${column.getValue}" th:text="${column.getDisplayValue}"></option>
-					</select>
-				</div>
-				<div class="col-4">
-					<select name="order" class="form-select">
-						<option th:if="${search}" th:each="order: ${searchOrder.values()}" th:value="${order.getValue}" th:text="${order.getDisplayValue}" th:selected="${selectedOrder.getValue}"></option>
-						<option th:unless="${search}" th:each="order: ${searchOrder.values()}" th:value="${order.getValue}" th:text="${order.getDisplayValue}"></option>
-					</select>
-				</div>
-				<div class="col-auto">
-					<input name="email" th:value="${#authentication.principal.username}" hidden>
-					<button name="search" class="btn btn-primary">検索</button>
-				</div>
+	
+	<div class="container-fluid col-11">
+		<div class="row my-5">
+			<div class="col-2">
+				<h2 th:text="${user.name}"></h2>
+				<a th:href="@{/todolist}" class="btn btn-primary" th:text="新規登録"></a>
 			</div>
-		</form>
+			<div class="col-10">
+				<h2>マイリスト</h2>
+				<div class="my-4">
+					<form th:action="@{/todolist}" method="post">
+						<div class="row g-3 justify-content-center">
+							<div class="col-5">
+								<select name="column" class="form-select">
+									<option th:if="${search}" th:each="column: ${toDoListColumn.values()}" th:value="${column.getValue()}" th:text="${column.getDisplayValue()}" th:selected="${column.getValue().equals(selectedColumn.getValue())}"></option>
+									<option th:unless="${search}" th:each="column: ${toDoListColumn.values()}" th:value="${column.getValue()}" th:text="${column.getDisplayValue()}"></option>
+								</select>
+							</div>
+							<div class="col-5">
+								<select name="order" class="form-select">
+									<option th:if="${search}" th:each="order: ${searchOrder.values()}" th:value="${order.getValue}" th:text="${order.getDisplayValue}" th:selected="${order.getValue().equals(selectedOrder.getValue())}"></option>
+									<option th:unless="${search}" th:each="order: ${searchOrder.values()}" th:value="${order.getValue}" th:text="${order.getDisplayValue}"></option>
+								</select>
+							</div>
+							<div class="col-auto">
+								<input name="email" th:value="${#authentication.principal.username}" hidden>
+								<button name="search" class="btn btn-primary">検索</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th class="text-center" scope="col"></th>
+								<th class="text-center" scope="col">タイトル</th>
+								<th class="text-center" scope="col">進捗</th>
+								<th class="text-center" scope="col">カテゴリー</th>
+								<th class="text-center" scope="col">作成日</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="list, stat : ${toDoLists}">
+								<th scope="row" th:text="${stat.count}"></th>
+								<td class="text-center" th:text="${list.title}"></td>
+								<td class="text-center" th:text="${list.status.displayValue}"></td>
+								<td class="text-center" th:text="${list.category.name}"></td>
+								<td class="text-center" th:text="${#temporals.format(list.createdTime, 'yyyy-MM-dd HH:mm')}"></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="d-flex justify-content-end" th:if="${search}">
+						<span th:text="|並び替え表示条件：『項目：${selectedColumn.getDisplayValue}　順番：${selectedOrder.getDisplayValue}』|"></span>
+					</div>
+				</div>
+				
+			</div>
+		</div>
 	</div>
 	
-	<div clas="container-fluid">
-		<div class="m-5">
-			<h2 th:text="|${user.name}様のTO DO LIST|"></h2>
-			<p th:if="${search}" th:text="|並び替え項目：${selectedColumn.getDisplayValue}、並び順：${selectedOrder.getDisplayValue}|"></p>
-			<a th:href="@{/todolist}" class="btn btn-primary" th:text="新規登録"></a>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th class="text-center" scope="col"></th>
-						<th class="text-center" scope="col">タイトル</th>
-						<th class="text-center" scope="col">進捗</th>
-						<th class="text-center" scope="col">カテゴリー</th>
-						<th class="text-center" scope="col">作成日</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="list, stat : ${toDoLists}">
-						<th scope="row" th:text="${stat.count}"></th>
-						<td class="text-center" th:text="${list.title}"></td>
-						<td class="text-center" th:text="${list.status.displayValue}"></td>
-						<td class="text-center" th:text="${list.category.name}"></td>
-						<td class="text-center" th:text="${#temporals.format(list.createdTime, 'yyyy-MM-dd HH:mm')}"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>	
+	
+	
+	
+	
+	
+	
 	
 	<th:block th:if="${hasAdminAuth}">
 		<div>
