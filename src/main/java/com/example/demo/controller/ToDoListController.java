@@ -56,7 +56,7 @@ public class ToDoListController {
 		
 		ToDoListMessage toDoListMessage = chooseMessage(toDoList);
 		storeMessage(model, toDoListMessage.getMessageId(), toDoListMessage.isError());
-		return "redirect:/user";
+		return AppUtil.doRedirect(UrlConst.USER);
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class ToDoListController {
 		List<ToDoListInfo> todoLists = toDoListService.orderUserToDoLists(form, user.get());
 		redirectAttributes.addFlashAttribute("list", todoLists);
 		redirectAttributes.addFlashAttribute("search", form);
-		return "redirect:/user";
+		return AppUtil.doRedirect(UrlConst.USER);
 	}
 	
 	private void storeMessage(Model model, String messageId, boolean isError) {
