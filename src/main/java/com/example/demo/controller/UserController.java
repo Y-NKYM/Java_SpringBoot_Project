@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,7 +40,6 @@ public class UserController {
 	
 	@GetMapping()
 	public String view(@ModelAttribute("list") ArrayList<ToDoListInfo> list ,@ModelAttribute("search") SearchForm form, @AuthenticationPrincipal User authUser, Model model) {
-		Map<String, String> map = new LinkedHashMap<>();
 		model.addAttribute("toDoListColumn", ToDoListColumn.class);
 		model.addAttribute("searchOrder", SearchOrder.class);
 
