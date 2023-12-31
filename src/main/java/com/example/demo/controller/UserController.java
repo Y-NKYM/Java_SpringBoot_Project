@@ -43,9 +43,6 @@ public class UserController {
 	@GetMapping()
 	public String view(@ModelAttribute("list") ArrayList<ToDoListInfo> list ,@ModelAttribute("search") SearchForm form, @AuthenticationPrincipal User authUser, Model model) {
 		Map<String, String> map = new LinkedHashMap<>();
-		map.put("title", "タイトル");
-		map.put("created_time", "作成日");
-		model.addAttribute("map", map);
 		model.addAttribute("toDoListColumn", ToDoListColumn.class);
 		model.addAttribute("searchOrder", SearchOrder.class);
 
