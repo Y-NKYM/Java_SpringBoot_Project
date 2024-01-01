@@ -43,7 +43,7 @@ public class WebSecurityConfig {
 			.formLogin(login -> login
 				.loginPage(UrlConst.LOGIN)
 				.usernameParameter(USERNAME_PARAMETER)
-				.defaultSuccessUrl(UrlConst.USER)
+				.defaultSuccessUrl(UrlConst.TODOLIST)
 				)
 			.logout(logout -> logout
 				.logoutSuccessUrl(UrlConst.LOGIN)

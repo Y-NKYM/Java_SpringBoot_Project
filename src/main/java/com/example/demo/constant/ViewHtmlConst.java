@@ -11,9 +11,9 @@ public class ViewHtmlConst {
 	/** ホーム画面 */
 	public static final String HOME = "/home/index";
 	
-	/** マイページ */
-	public static final String USER_MYPAGE = "/user/mypage";
+	/** マイリスト画面 */
+	public static final String TODOLIST = "/todolist/index";
 	
 	/** ToDo新規登録 */
-	public static final String TODO_NEW = "/todolist/new";
+	public static final String TODOLIST_NEW = "/todolist/new";
 }

@@ -18,7 +18,7 @@ public class UrlConst {
 	public static final String USER = "/user";
 	
 	/** ToDoリスト画面 */
-	public static final String TODO = "/todolist";
+	public static final String TODOLIST = "/todolist";
 	
 	/** 認証不要画面 */
 	public static final String[] NO_AUTH = {LOGIN, REGISTER, HOME, "/webjars/**"};
