@@ -2,27 +2,42 @@
 <html>
 <head>
 	<div th:replace="~{partial/head::head}"></div>
-	<title>Insert title here</title>
+	<title>新規投稿</title>
 </head>
 <body>
 	<div th:replace="~{partial/navbar::navbar-auth}"></div>
-	<form th:action="@{/todolist/create}" method="post" th:object="${toDoListNewForm}">
-		<input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
-		<div class="mt-3">
-			<label for="title" class="form-label">タイトル</label>
-			<input type="text" th:field="*{title}" class="form-control">
+	<div class="container-fluid col-11 my-5">
+		<div class="row">
+			<div class="col-1">
+				<a th:href="@{/todolist}" th:text="＜戻る"></a>
+			</div>
+			<div class="container-fluid col-10">
+				<h2>新規投稿</h2>
+				<div class="my-4">
+					<form th:action="@{/todolist/create}" method="post" th:object="${toDoListNewForm}">
+						<input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
+						<div class="mt-3">
+							<label for="title" class="form-label">タイトル</label>
+							<input type="text" th:field="*{title}" class="form-control">
+						</div>
+						<div class="mt-3">
+							<label for="body" class="form-label">内容</label>
+							<textarea type="text" th:field="*{body}" class="form-control" rows="5"></textarea>
+						</div>
+						<div class="mt-3">
+							<label for="categoryId" class="form-label">内容</label>
+							<select th:field="*{categoryId}" class="form-select">
+									<option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}"> </option>
+							</select>
+						</div>
+						<div class="mt-3">
+							<button class="btn btn-primary">登録</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col-1"></div>
 		</div>
-		<div class="mt-3">
-			<label for="body" class="form-label">内容</label>
-			<input type="text" th:field="*{body}" class="form-control">
-		</div>
-		<select th:field="*{categoryId}">
-				<option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}"> </option>
-		</select>
-	
-		<div class="mt-3">
-			<button class="btn btn-primary">登録</button>
-		</div>
-	</form>
+	</div>
 </body>
 </html>
