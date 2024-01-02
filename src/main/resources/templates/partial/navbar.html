@@ -3,13 +3,13 @@
 <body>
 	<nav class="navbar bg-secondary" th:fragment="navbar">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="@{/}">Navbar</a>
+			<a class="navbar-brand" th:href="@{/}">Navbar</a>
 		</div>
 	</nav>
 	
 	<nav class="navbar bg-secondary" th:fragment="navbar-auth">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="@{/}">Navbar</a>
+			<a class="navbar-brand" th:href="@{/todolist}">Navbar</a>
 			<form th:action="@{/logout}" method="post">
 				<span class="text-light" th:text="${#authentication.principal.username}">username</span>
 				<input type="submit" class="btn btn-light" value="ログアウト">
