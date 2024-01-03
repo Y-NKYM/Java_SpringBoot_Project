@@ -39,7 +39,7 @@
 					</form>
 				</div>
 				<div>
-					<table class="table table-hover">
+					<table class="table" id="todolist">
 						<thead>
 							<tr>
 								<th class="text-center" scope="col"></th>
@@ -63,17 +63,12 @@
 						<span th:text="|並び替え表示条件：『項目：${selectedColumn.getDisplayValue}　順番：${selectedOrder.getDisplayValue}』|"></span>
 					</div>
 				</div>
-				
+				<div class="text-end">
+					<button type="submit" class="btn btn-secondary px-4" id="updateTodolist" name="update" th:text="編集" disabled></button>
+				</div>
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	
-	
-	
-	
 	
 	<th:block th:if="${hasAdminAuth}">
 		<div>

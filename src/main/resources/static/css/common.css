@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+/** テーブル選択行の背景色 */
+.table-chosen{
+	background-color: #cce5ff;
+}
