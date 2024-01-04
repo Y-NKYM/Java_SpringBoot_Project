@@ -10,10 +10,13 @@ public class MessageConst {
 	
 	/** 新規登録画面 */
 	public static final String REGISTER_SUCCEED = "register.succeed";
-	public static final String REGISTER_EXIST_EMAIL_FAILED = "register.exist-email-failed";
-	public static final String REGISTER_VALIDATE_FAILED = "register.validate-failed";
+	public static final String REGISTER_EXIST_EMAIL_FAILED = "register.existEmailFailed";
+	public static final String REGISTER_VALIDATE_FAILED = "register.validatFailed";
 	
 	/** 新規リスト登録 */
 	public static final String TODOLIST_SUCCEED = "todolist.succeed";
 	public static final String TODOLIST_FAILED = "todolist.failed";
+	
+	/** リスト編集画面 */
+	public static final String TODOLIST_EDIT_NO_ID_FAILED = "todolistEdit.noIdFailed";
 }
