@@ -14,6 +14,7 @@ public interface ToDoListService {
 	 * @return ユーザー情報テーブルの全登録情報の配列
 	 */
 	public List<ToDoListInfo> getUserToDoLists(UserInfo user);
+	public Optional<ToDoListInfo> getToDoList(String todolistId);
 	public Optional<ToDoListInfo> createToDoList(ToDoListNewForm form);
 	public List<ToDoListInfo> orderUserToDoLists(SearchForm form, UserInfo user);
 }

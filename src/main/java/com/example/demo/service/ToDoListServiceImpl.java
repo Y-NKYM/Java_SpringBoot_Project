@@ -37,6 +37,11 @@ public class ToDoListServiceImpl implements ToDoListService{
 	}
 	
 	@Override
+	public Optional<ToDoListInfo> getToDoList(String todolistId){
+		return toDoListRepository.findById(todolistId);
+	}
+	
+	@Override
 	public List<ToDoListInfo> orderUserToDoLists(SearchForm form, UserInfo user){
 		//タイトル・昇順
 		if(form.getColumn().equals("title") && form.getOrder().equals("asc")) {
