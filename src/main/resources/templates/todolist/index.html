@@ -52,6 +52,7 @@
 						<tbody>
 							<tr th:each="list, stat : ${toDoLists}">
 								<th scope="row" th:text="${stat.count}"></th>
+								<td th:id="id" th:text="${list.listId}" hidden></td>
 								<td class="text-center" th:text="${list.title}"></td>
 								<td class="text-center" th:text="${list.status.displayValue}"></td>
 								<td class="text-center" th:text="${list.category.name}"></td>
@@ -64,7 +65,10 @@
 					</div>
 				</div>
 				<div class="text-end">
-					<button type="submit" class="btn btn-secondary px-4" id="updateTodolist" name="update" th:text="編集" disabled></button>
+					<form th:action="@{/todolist}" method="post" th:object="${selectedIdForm}">
+						<input type="text" th:field="*{selectedTodolistId}" hidden>
+						<input type="submit" class="btn btn-secondary px-4" id="editTodolistBtn" name="edit" value="編集" disabled>
+					</form>
 				</div>
 			</div>
 		</div>
