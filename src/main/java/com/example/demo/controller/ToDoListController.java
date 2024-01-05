@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.constant.AuthorityKind;
+import com.example.demo.constant.MessageConst;
 import com.example.demo.constant.SearchOrder;
+import com.example.demo.constant.SessionKeyConst;
 import com.example.demo.constant.ToDoListColumn;
 import com.example.demo.constant.ToDoListMessage;
 import com.example.demo.constant.UrlConst;
@@ -25,12 +27,15 @@ import com.example.demo.entity.CategoryInfo;
 import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.SearchForm;
+import com.example.demo.form.SelectedIdForm;
 import com.example.demo.form.ToDoListNewForm;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ToDoListService;
 import com.example.demo.service.UserService;
 import com.example.demo.util.AppUtil;
+import com.github.dozermapper.core.Mapper;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -45,11 +50,18 @@ public class ToDoListController {
 	/** CategoryService */
 	private final CategoryService categoryService;
 	
+	/** Dozer Mapper */
+	private final Mapper mapper;
+	
 	/** MessageSource */
 	private final MessageSource messageSource;
 	
+	/** HttpSession session */
+	private final HttpSession session;
+	
 	@GetMapping()
-	public String view(@ModelAttribute("list") ArrayList<ToDoListInfo> list ,@ModelAttribute("search") SearchForm form, @AuthenticationPrincipal User authUser, Model model) {
+	public String view(@ModelAttribute("list") ArrayList<ToDoListInfo> list ,@ModelAttribute("search") SearchForm form, SelectedIdForm selectedIdForm, @AuthenticationPrincipal User authUser, Model model) {
+		session.removeAttribute(SessionKeyConst.SELECTED_TODOLIST_ID);
 		model.addAttribute("toDoListColumn", ToDoListColumn.class);
 		model.addAttribute("searchOrder", SearchOrder.class);
 
@@ -118,6 +130,32 @@ public class ToDoListController {
 		redirectAttributes.addFlashAttribute("list", todoLists);
 		redirectAttributes.addFlashAttribute("search", form);
 		return AppUtil.doRedirect(UrlConst.TODOLIST);
+	}
+	
+	@GetMapping("/edit")
+	public String edit(RedirectAttributes redirectAttributes, Model model, ToDoListNewForm form){
+		String selectedTodolistId = (String)session.getAttribute(SessionKeyConst.SELECTED_TODOLIST_ID);
+		var todolist = toDoListService.getToDoList(selectedTodolistId);
+		if(todolist.isEmpty()) {
+			redirectAttributes.addFlashAttribute("todolistEditErrorMessage", MessageConst.TODOLIST_EDIT_NO_ID_FAILED);
+			return AppUtil.doRedirect(UrlConst.TODOLIST);
+		}
+		
+		var test = mapper.map(todolist.get(), ToDoListNewForm.class);
+		model.addAttribute("todolistForm" , mapper.map(todolist.get(), ToDoListNewForm.class));
+		return ViewHtmlConst.TODOLIST_EDIT;
+	}
+	
+	/**
+	 * 変数editのパラメーターが存在する場合、セッションにID情報を保管し、編集画面へ遷移します。
+	 * 
+	 * @param form 選択されたIDを取得するフォーム
+	 * @return 編集画面へリダイレクト
+	 */
+	@PostMapping(params="edit")
+	public String edit(SelectedIdForm form) {
+		session.setAttribute(SessionKeyConst.SELECTED_TODOLIST_ID, form.getSelectedTodolistId());
+		return AppUtil.doRedirect(UrlConst.TODOLIST_EDIT);
 	}
 	
 	private void storeMessage(Model model, String messageId, boolean isError) {
