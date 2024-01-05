@@ -19,4 +19,7 @@ public class MessageConst {
 	
 	/** リスト編集画面 */
 	public static final String TODOLIST_EDIT_NO_ID_FAILED = "todolistEdit.noIdFailed";
+	public static final String TODOLIST_UPDATE_SUCCEED = "todolistUpdate.succeed";
+	public static final String TODOLIST_UPDATE_FAILED = "todolistUpdate.failed";
+
 }
