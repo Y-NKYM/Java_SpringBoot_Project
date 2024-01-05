@@ -22,6 +22,6 @@ public class UrlConst {
 	public static final String TODOLIST_EDIT = "/todolist/edit";
 	
 	/** 認証不要画面 */
-	public static final String[] NO_AUTH = {LOGIN, REGISTER, HOME, "/webjars/**"};
+	public static final String[] NO_AUTH = {LOGIN, REGISTER, HOME, "/webjars/**", "/css/**", "/js/**"};
 }
 
