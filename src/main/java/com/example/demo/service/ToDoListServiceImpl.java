@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.constant.ListStatusKind;
+import com.example.demo.constant.ToDoListMessage;
 import com.example.demo.entity.CategoryInfo;
 import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.entity.UserInfo;
@@ -76,6 +77,22 @@ public class ToDoListServiceImpl implements ToDoListService{
 		return Optional.of(toDoListRepository.save(toDoList));
 	}
 	
-	
+	@Override
+	public ToDoListMessage updateTodolist(ToDoListNewForm form, String selectedTodolistId) {
+		Optional<ToDoListInfo> selectedTodolist = toDoListRepository.findById(selectedTodolistId);
+		if(selectedTodolist.isEmpty()) {
+			return ToDoListMessage.UPDATE_FAILED;
+		}
+		ToDoListInfo todolist = selectedTodolist.get();
+		todolist.setTitle(form.getTitle());
+		todolist.setBody(form.getBody());
+		
+		try {
+			toDoListRepository.save(todolist);
+		}catch(Exception e) {
+			return ToDoListMessage.UPDATE_FAILED;
+		}
+		return ToDoListMessage.UPDATE_SUCCEED;
+	}
 	
 }

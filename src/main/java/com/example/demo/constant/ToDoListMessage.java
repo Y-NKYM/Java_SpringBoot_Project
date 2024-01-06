@@ -8,7 +8,10 @@ import lombok.Getter;
 public enum ToDoListMessage {
 	
 	SUCCEED(MessageConst.TODOLIST_SUCCEED, false),
-	FAILED(MessageConst.TODOLIST_FAILED, true);
+	FAILED(MessageConst.TODOLIST_FAILED, true),
+	
+	UPDATE_SUCCEED(MessageConst.TODOLIST_UPDATE_SUCCEED, false),
+	UPDATE_FAILED(MessageConst.TODOLIST_UPDATE_FAILED, true);
 	
 	private String messageId;
 	private boolean isError;

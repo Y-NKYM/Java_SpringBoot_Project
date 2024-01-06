@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.constant.ToDoListMessage;
 import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.SearchForm;
@@ -17,4 +18,5 @@ public interface ToDoListService {
 	public Optional<ToDoListInfo> getToDoList(String todolistId);
 	public Optional<ToDoListInfo> createToDoList(ToDoListNewForm form);
 	public List<ToDoListInfo> orderUserToDoLists(SearchForm form, UserInfo user);
+	public ToDoListMessage updateTodolist(ToDoListNewForm form, String selectedTodolistId);
 }
