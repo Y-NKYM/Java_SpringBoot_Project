@@ -132,16 +132,26 @@ public class ToDoListController {
 		return AppUtil.doRedirect(UrlConst.TODOLIST);
 	}
 	
+	/**
+	 * 編集画面　一覧から取得したIDを基に作成します。IDがセッションに存在しない場合は一覧にリダイレクトします。
+	 * 
+	 * @param redirectAttributes エラー時のメッセージを一覧画面で表示末うため。
+	 * @param model
+	 * @param form 変更項目フォーム
+	 * @return Todolist一覧画面
+	 */
 	@GetMapping("/edit")
 	public String edit(RedirectAttributes redirectAttributes, Model model, ToDoListNewForm form){
+		
 		String selectedTodolistId = (String)session.getAttribute(SessionKeyConst.SELECTED_TODOLIST_ID);
-		var todolist = toDoListService.getToDoList(selectedTodolistId);
+		if(selectedTodolistId==null) {
+			return AppUtil.doRedirect(UrlConst.TODOLIST);
+		}
+		Optional<ToDoListInfo> todolist = toDoListService.getToDoList(selectedTodolistId);
 		if(todolist.isEmpty()) {
 			redirectAttributes.addFlashAttribute("todolistEditErrorMessage", MessageConst.TODOLIST_EDIT_NO_ID_FAILED);
 			return AppUtil.doRedirect(UrlConst.TODOLIST);
 		}
-		
-		var test = mapper.map(todolist.get(), ToDoListNewForm.class);
 		model.addAttribute("todolistForm" , mapper.map(todolist.get(), ToDoListNewForm.class));
 		return ViewHtmlConst.TODOLIST_EDIT;
 	}
@@ -156,6 +166,14 @@ public class ToDoListController {
 	public String edit(SelectedIdForm form) {
 		session.setAttribute(SessionKeyConst.SELECTED_TODOLIST_ID, form.getSelectedTodolistId());
 		return AppUtil.doRedirect(UrlConst.TODOLIST_EDIT);
+	}
+	
+	@PostMapping("/update")
+	public String update(RedirectAttributes redirectAttributes, Model model, ToDoListNewForm form, @AuthenticationPrincipal User user) {
+		String selectedTodolistId = (String)session.getAttribute(SessionKeyConst.SELECTED_TODOLIST_ID);
+		ToDoListMessage updateMessage = toDoListService.updateTodolist(form, selectedTodolistId);
+		redirectAttributes.addFlashAttribute("todolistUpdateMessage", updateMessage);
+		return AppUtil.doRedirect(UrlConst.TODOLIST);
 	}
 	
 	private void storeMessage(Model model, String messageId, boolean isError) {
