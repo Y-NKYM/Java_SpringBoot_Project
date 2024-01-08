@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.constant.AuthorityKind;
-import com.example.demo.constant.MessageConst;
 import com.example.demo.constant.SearchOrder;
 import com.example.demo.constant.SessionKeyConst;
 import com.example.demo.constant.ToDoListColumn;
@@ -118,11 +117,13 @@ public class ToDoListController {
 	}
 	
 	@PostMapping("/create")
-	public String create(@AuthenticationPrincipal User authUser, Model model, ToDoListNewForm form) {
+	public String create(RedirectAttributes redirectAttributes, @AuthenticationPrincipal User authUser, Model model, ToDoListNewForm form) {
 		Optional<ToDoListInfo> toDoList = toDoListService.createToDoList(form);
 		
 		ToDoListMessage toDoListMessage = chooseMessage(toDoList);
-		storeMessage(model, toDoListMessage.getMessageId(), toDoListMessage.isError());
+		modelMap.addAttribute("message", toDoListMessage);
+		redirectAttributes.addFlashAttribute("modelMap", modelMap);
+		
 		return AppUtil.doRedirect(UrlConst.TODOLIST);
 	}
 	
@@ -160,7 +161,11 @@ public class ToDoListController {
 		}
 		Optional<ToDoListInfo> todolist = toDoListService.getToDoList(selectedTodolistId);
 		if(todolist.isEmpty()) {
-			redirectAttributes.addFlashAttribute("todolistEditErrorMessage", MessageConst.TODOLIST_EDIT_NO_ID_FAILED);
+			ToDoListMessage editMessage = ToDoListMessage.EDIT_ID_NOT_FOUND;
+			
+			modelMap.addAttribute("message", editMessage);
+			redirectAttributes.addFlashAttribute("modelMap", modelMap);
+			
 			return AppUtil.doRedirect(UrlConst.TODOLIST);
 		}
 		model.addAttribute("todolistForm" , mapper.map(todolist.get(), ToDoListNewForm.class));

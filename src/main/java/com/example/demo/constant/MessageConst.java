@@ -18,7 +18,7 @@ public class MessageConst {
 	public static final String TODOLIST_FAILED = "todolist.failed";
 	
 	/** リスト編集画面 */
-	public static final String TODOLIST_EDIT_NO_ID_FAILED = "todolistEdit.noIdFailed";
+	public static final String TODOLIST_EDIT_ID_NOT_FOUND = "todolistEdit.noIdFailed";
 	public static final String TODOLIST_UPDATE_SUCCEED = "todolistUpdate.succeed";
 	public static final String TODOLIST_UPDATE_FAILED = "todolistUpdate.failed";
 
