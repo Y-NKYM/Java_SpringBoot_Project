@@ -60,8 +60,14 @@ public class ToDoListController {
 	private final HttpSession session;
 	
 	@GetMapping()
-	public String view(@ModelAttribute("list") ArrayList<ToDoListInfo> list ,@ModelAttribute("search") SearchForm form, SelectedIdForm selectedIdForm, @AuthenticationPrincipal User authUser, Model model) {
+	public String view(@ModelAttribute("list") ArrayList<ToDoListInfo> list ,@ModelAttribute("search") SearchForm form,@ModelAttribute("todolistUpdateMessage") ToDoListMessage message, SelectedIdForm selectedIdForm, @AuthenticationPrincipal User authUser, Model model) {
+		
 		session.removeAttribute(SessionKeyConst.SELECTED_TODOLIST_ID);
+		
+//		if(messagetest!=null) {
+//			storeMessage(model, messagetest.getMessageId(), messagetest.isError());
+//		}
+		
 		model.addAttribute("toDoListColumn", ToDoListColumn.class);
 		model.addAttribute("searchOrder", SearchOrder.class);
 
