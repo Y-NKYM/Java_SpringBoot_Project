@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,14 +60,18 @@ public class ToDoListController {
 	/** HttpSession session */
 	private final HttpSession session;
 	
+	/** ModelMap */
+	private final ModelMap modelMap;
+	
 	@GetMapping()
-	public String view(@ModelAttribute("list") ArrayList<ToDoListInfo> list ,@ModelAttribute("search") SearchForm form,@ModelAttribute("todolistUpdateMessage") ToDoListMessage message, SelectedIdForm selectedIdForm, @AuthenticationPrincipal User authUser, Model model) {
+	public String view(@ModelAttribute("list") ArrayList<ToDoListInfo> list ,@ModelAttribute("search") SearchForm form,@ModelAttribute("modelMap") ModelMap modelMap, SelectedIdForm selectedIdForm, @AuthenticationPrincipal User authUser, Model model) {
 		
 		session.removeAttribute(SessionKeyConst.SELECTED_TODOLIST_ID);
 		
-//		if(messagetest!=null) {
-//			storeMessage(model, messagetest.getMessageId(), messagetest.isError());
-//		}
+		if(modelMap != null && !modelMap.isEmpty()) {
+			ToDoListMessage message = (ToDoListMessage)modelMap.get("message");
+			storeMessage(model, message.getMessageId(), message.isError());
+		}
 		
 		model.addAttribute("toDoListColumn", ToDoListColumn.class);
 		model.addAttribute("searchOrder", SearchOrder.class);
@@ -178,7 +183,10 @@ public class ToDoListController {
 	public String update(RedirectAttributes redirectAttributes, Model model, ToDoListNewForm form, @AuthenticationPrincipal User user) {
 		String selectedTodolistId = (String)session.getAttribute(SessionKeyConst.SELECTED_TODOLIST_ID);
 		ToDoListMessage updateMessage = toDoListService.updateTodolist(form, selectedTodolistId);
-		redirectAttributes.addFlashAttribute("todolistUpdateMessage", updateMessage);
+		
+		modelMap.addAttribute("message", updateMessage);
+		
+		redirectAttributes.addFlashAttribute("modelMap", modelMap);
 		return AppUtil.doRedirect(UrlConst.TODOLIST);
 	}
 	
