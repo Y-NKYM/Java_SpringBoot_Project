@@ -21,5 +21,8 @@ public class MessageConst {
 	public static final String TODOLIST_EDIT_ID_NOT_FOUND = "todolistEdit.noIdFailed";
 	public static final String TODOLIST_UPDATE_SUCCEED = "todolistUpdate.succeed";
 	public static final String TODOLIST_UPDATE_FAILED = "todolistUpdate.failed";
+	
+	public static final String TODOLIST_DELETE_SUCCEED = "todolistDelete.succeed";
+	public static final String TODOLIST_DELETE_FAILED = "todolistDelete.failed";
 
 }

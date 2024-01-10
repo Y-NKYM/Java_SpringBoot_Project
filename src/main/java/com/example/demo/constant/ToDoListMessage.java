@@ -13,7 +13,11 @@ public enum ToDoListMessage {
 	EDIT_ID_NOT_FOUND(MessageConst.TODOLIST_EDIT_ID_NOT_FOUND, true),
 	
 	UPDATE_SUCCEED(MessageConst.TODOLIST_UPDATE_SUCCEED, false),
-	UPDATE_FAILED(MessageConst.TODOLIST_UPDATE_FAILED, true);
+	UPDATE_FAILED(MessageConst.TODOLIST_UPDATE_FAILED, true),
+	
+	DELETE_SUCCEED(MessageConst.TODOLIST_DELETE_SUCCEED, false),
+	DELETE_FAILED(MessageConst.TODOLIST_DELETE_FAILED, true);
+	
 	
 	private String messageId;
 	private boolean isError;
