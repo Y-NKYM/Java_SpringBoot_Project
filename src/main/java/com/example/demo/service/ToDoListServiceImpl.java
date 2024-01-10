@@ -95,4 +95,14 @@ public class ToDoListServiceImpl implements ToDoListService{
 		return ToDoListMessage.UPDATE_SUCCEED;
 	}
 	
+	@Override
+	public ToDoListMessage deleteTodolist(String selectedTodolistId) {
+		var todolist = toDoListRepository.findById(selectedTodolistId);
+		if(todolist.isEmpty()) {
+			return ToDoListMessage.DELETE_FAILED;
+		}
+		toDoListRepository.deleteById(selectedTodolistId);
+		return ToDoListMessage.DELETE_SUCCEED;
+	}
+	
 }

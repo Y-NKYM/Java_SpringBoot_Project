@@ -19,4 +19,7 @@ public interface ToDoListService {
 	public Optional<ToDoListInfo> createToDoList(ToDoListNewForm form);
 	public List<ToDoListInfo> orderUserToDoLists(SearchForm form, UserInfo user);
 	public ToDoListMessage updateTodolist(ToDoListNewForm form, String selectedTodolistId);
+	public ToDoListMessage deleteTodolist(String selectedTodolistId);
+	
+	
 }
