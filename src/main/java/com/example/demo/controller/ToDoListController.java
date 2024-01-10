@@ -195,6 +195,14 @@ public class ToDoListController {
 		return AppUtil.doRedirect(UrlConst.TODOLIST);
 	}
 	
+	@PostMapping(params="delete")
+	public String delete(RedirectAttributes redirectAttributes, SelectedIdForm form) {
+		ToDoListMessage deleteMessage = toDoListService.deleteTodolist(form.getSelectedTodolistId());
+		modelMap.addAttribute("message", deleteMessage);
+		redirectAttributes.addFlashAttribute("modelMap", modelMap);
+		return AppUtil.doRedirect(UrlConst.TODOLIST);
+	}
+	
 	private void storeMessage(Model model, String messageId, boolean isError) {
 		String message = AppUtil.getMessage(messageSource, messageId);
 		model.addAttribute("message", message);

@@ -11,14 +11,15 @@
 	</div>
 	
 	<div class="container-fluid col-11">
-		<div class="row my-5">
+		<div class="row my-4">
 			<div class="col-2">
 				<h2 th:text="${user.name}"></h2>
-				<a th:href="@{/todolist/new}" class="btn btn-primary" th:text="新規登録"></a>
+				
+				<a th:href="@{/todolist/new}" class="btn btn-primary my-2" th:text="新規登録"></a>
 			</div>
 			<div class="col-10">
 				<h2>マイリスト</h2>
-				<div class="my-4">
+				<div class="my-3">
 					<form th:action="@{/todolist}" method="post">
 						<div class="row g-3 justify-content-center">
 							<div class="col-5">
