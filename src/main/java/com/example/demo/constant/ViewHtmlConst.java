@@ -17,6 +17,9 @@ public class ViewHtmlConst {
 	/** ToDo新規登録 */
 	public static final String TODOLIST_NEW = "/todolist/new";
 	
-	/** ToDo編集 */
+	/** ToDo編集画面 */
 	public static final String TODOLIST_EDIT = "/todolist/edit";
+	
+	/** ToDo詳細画面 */
+	public static final String TODOLIST_SHOW = "/todolist/show";
 }
