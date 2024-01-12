@@ -144,6 +144,27 @@ public class ToDoListController {
 		return AppUtil.doRedirect(UrlConst.TODOLIST);
 	}
 	
+	@GetMapping("/show")
+	public String show(RedirectAttributes redirectAttributes, Model model, SelectedIdForm form) {
+		String selectedTodolistId = (String)session.getAttribute(SessionKeyConst.SELECTED_TODOLIST_ID);
+		if(selectedTodolistId==null) {
+			return AppUtil.doRedirect(UrlConst.TODOLIST);
+		}
+		Optional<ToDoListInfo> todolist = toDoListService.getToDoList(selectedTodolistId);
+		if(todolist.isEmpty()) {
+			ToDoListMessage showMessage = ToDoListMessage.ID_NOT_FOUND;
+			
+			modelMap.addAttribute("message", showMessage);
+			redirectAttributes.addFlashAttribute("modelMap", modelMap);
+			return AppUtil.doRedirect(UrlConst.TODOLIST);
+		}
+		System.out.println(todolist.get().getListId());
+		System.out.println(todolist.get().getCategory().getName());
+		model.addAttribute("todolist" , todolist.get());
+
+		return ViewHtmlConst.TODOLIST_SHOW;
+	}
+	
 	/**
 	 * 編集画面　一覧から取得したIDを基に作成します。IDがセッションに存在しない場合は一覧にリダイレクトします。
 	 * 
@@ -161,7 +182,7 @@ public class ToDoListController {
 		}
 		Optional<ToDoListInfo> todolist = toDoListService.getToDoList(selectedTodolistId);
 		if(todolist.isEmpty()) {
-			ToDoListMessage editMessage = ToDoListMessage.EDIT_ID_NOT_FOUND;
+			ToDoListMessage editMessage = ToDoListMessage.ID_NOT_FOUND;
 			
 			modelMap.addAttribute("message", editMessage);
 			redirectAttributes.addFlashAttribute("modelMap", modelMap);
@@ -182,6 +203,12 @@ public class ToDoListController {
 	public String edit(SelectedIdForm form) {
 		session.setAttribute(SessionKeyConst.SELECTED_TODOLIST_ID, form.getSelectedTodolistId());
 		return AppUtil.doRedirect(UrlConst.TODOLIST_EDIT);
+	}
+	
+	@PostMapping(params="show")
+	public String show(SelectedIdForm form) {
+		session.setAttribute(SessionKeyConst.SELECTED_TODOLIST_ID, form.getSelectedTodolistId());
+		return AppUtil.doRedirect(UrlConst.TODOLIST_SHOW);
 	}
 	
 	@PostMapping("/update")

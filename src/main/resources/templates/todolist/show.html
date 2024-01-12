@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<div th:replace="~{partial/head::head}"></div>
+	<title>詳細画面</title>
+</head>
+<body>
+	<div th:replace="~{partial/navbar::navbar-auth}"></div>
+	<div class="container-fluid col-11 my-5">
+		<div class="row">
+			<div class="col-1">
+				<a th:href="@{/todolist}" th:text="＜戻る"></a>
+			</div>
+			<div class="container-fluid col-10">
+				<h2>リスト詳細</h2>
+				<div class="my-4">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td>タイトル</td>
+								<td th:text="${todolist.getTitle}"></td>
+							</tr>
+							<tr>
+								<td>内容</td>
+								<td th:text="${todolist.getBody}"></td>
+							</tr>
+							<tr>
+								<td>カテゴリー</td>
+								<td th:text="${todolist.getCategory.getName}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<form th:action="@{/todolist}" method="post" th:object="${selectedIdForm}">
+					<input type="text" name="selectedTodolistId" th:value="${todolist.getListId}" hidden>
+					<input type="submit" class="btn btn-secondary px-4" name="edit" value="編集">
+					<input type="button" class="btn btn-danger px-4" id="checkDeleteTodolistBtn" value="削除" data-confirm="本当に削除してよろしいですか?" data-bs-toggle="modal" data-bs-target="#deleteTodolistModal">
+					<input type="submit" id="deleteTodolistBtn" name="delete" hidden>
+				</form>
+				<div th:insert="~{partial/deleteConfirmPopUp::deleteConfirmPopUp}"></div>
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
+</body>
+</html>

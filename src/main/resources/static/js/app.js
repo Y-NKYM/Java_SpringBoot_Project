@@ -11,6 +11,7 @@
 	
 	//編集ボタンのクリックを可能にする
 		$('#editTodolistBtn').removeAttr('disabled');
+		$('#showTodolistBtn').removeAttr('disabled');
 		$('#checkDeleteTodolistBtn').removeAttr('disabled');
 		inputSelectedId($(this));
 	 });
