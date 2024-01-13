@@ -191,6 +191,7 @@ public class ToDoListController {
 			return AppUtil.doRedirect(UrlConst.TODOLIST);
 		}
 		var selectedTodolist = mapper.map(todolist.get(), ToDoListEditDTO.class);
+		selectedTodolist.setCategoryId(todolist.get().getCategory().getCategoryId());
 		model.addAttribute("todolistForm" , selectedTodolist);
 		
 		List<CategoryInfo> categories = categoryService.getCategories();
