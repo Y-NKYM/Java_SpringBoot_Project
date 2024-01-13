@@ -24,12 +24,12 @@
 							<label for="body" class="form-label">内容</label>
 							<textarea type="text" th:field="*{body}" class="form-control" rows="5"></textarea>
 						</div>
-<!--						<div class="mt-3">-->
-<!--							<label for="categoryId" class="form-label">カテゴリー</label>-->
-<!--							<select th:field="*{categoryId}" class="form-select">-->
-<!--									<option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}"> </option>-->
-<!--							</select>-->
-<!--						</div>-->
+						<div class="mt-3">
+							<label for="categoryId" class="form-label">カテゴリー</label>
+							<select th:field="*{categoryId}" class="form-select">
+								<option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}" th:selected="${category.categoryId==todolistForm.categoryId}"> </option>
+							</select>
+						</div>
 						<div class="mt-3">
 							<button class="btn btn-primary">更新</button>
 						</div>

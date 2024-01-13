@@ -23,6 +23,7 @@ import com.example.demo.constant.ToDoListColumn;
 import com.example.demo.constant.ToDoListMessage;
 import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.ViewHtmlConst;
+import com.example.demo.dto.ToDoListEditDTO;
 import com.example.demo.entity.CategoryInfo;
 import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.entity.UserInfo;
@@ -174,7 +175,7 @@ public class ToDoListController {
 	 * @return Todolist一覧画面
 	 */
 	@GetMapping("/edit")
-	public String edit(RedirectAttributes redirectAttributes, Model model, ToDoListNewForm form){
+	public String edit(RedirectAttributes redirectAttributes, Model model){
 		
 		String selectedTodolistId = (String)session.getAttribute(SessionKeyConst.SELECTED_TODOLIST_ID);
 		if(selectedTodolistId==null) {
@@ -189,7 +190,11 @@ public class ToDoListController {
 			
 			return AppUtil.doRedirect(UrlConst.TODOLIST);
 		}
-		model.addAttribute("todolistForm" , mapper.map(todolist.get(), ToDoListNewForm.class));
+		var selectedTodolist = mapper.map(todolist.get(), ToDoListEditDTO.class);
+		model.addAttribute("todolistForm" , selectedTodolist);
+		
+		List<CategoryInfo> categories = categoryService.getCategories();
+		model.addAttribute("categories", categories);
 		return ViewHtmlConst.TODOLIST_EDIT;
 	}
 	
