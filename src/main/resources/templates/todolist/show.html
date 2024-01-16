@@ -28,6 +28,10 @@
 								<td>カテゴリー</td>
 								<td th:text="${todolist.getCategory.getName}"></td>
 							</tr>
+							<tr>
+								<td>ステータス</td>
+								<td th:text="${todolist.getStatus.displayValue}"></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>

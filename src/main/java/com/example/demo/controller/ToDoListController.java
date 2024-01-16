@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.constant.AuthorityKind;
+import com.example.demo.constant.ListStatusKind;
 import com.example.demo.constant.SearchOrder;
 import com.example.demo.constant.SessionKeyConst;
 import com.example.demo.constant.ToDoListColumn;
@@ -196,6 +197,9 @@ public class ToDoListController {
 		
 		List<CategoryInfo> categories = categoryService.getCategories();
 		model.addAttribute("categories", categories);
+		System.out.println(ListStatusKind.values());
+		model.addAttribute("statusOptions", ListStatusKind.values());
+		
 		return ViewHtmlConst.TODOLIST_EDIT;
 	}
 	
