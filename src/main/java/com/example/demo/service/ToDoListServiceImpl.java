@@ -83,9 +83,14 @@ public class ToDoListServiceImpl implements ToDoListService{
 		if(selectedTodolist.isEmpty()) {
 			return ToDoListMessage.UPDATE_FAILED;
 		}
+		Optional<CategoryInfo> category = categoryRepository.findById(form.getCategoryId());
+		if(category.isEmpty()) {
+			return ToDoListMessage.UPDATE_FAILED;
+		}
 		ToDoListInfo todolist = selectedTodolist.get();
 		todolist.setTitle(form.getTitle());
 		todolist.setBody(form.getBody());
+		todolist.setCategory(category.get());
 		
 		try {
 			toDoListRepository.save(todolist);
