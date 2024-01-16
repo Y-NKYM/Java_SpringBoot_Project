@@ -7,6 +7,7 @@ import com.example.demo.constant.ToDoListMessage;
 import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.SearchForm;
+import com.example.demo.form.ToDoListEditForm;
 import com.example.demo.form.ToDoListNewForm;
 
 public interface ToDoListService {
@@ -18,7 +19,7 @@ public interface ToDoListService {
 	public Optional<ToDoListInfo> getToDoList(String todolistId);
 	public Optional<ToDoListInfo> createToDoList(ToDoListNewForm form);
 	public List<ToDoListInfo> orderUserToDoLists(SearchForm form, UserInfo user);
-	public ToDoListMessage updateTodolist(ToDoListNewForm form, String selectedTodolistId);
+	public ToDoListMessage updateTodolist(ToDoListEditForm form, String selectedTodolistId);
 	public ToDoListMessage deleteTodolist(String selectedTodolistId);
 	
 	

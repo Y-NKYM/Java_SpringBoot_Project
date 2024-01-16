@@ -30,6 +30,7 @@ import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.SearchForm;
 import com.example.demo.form.SelectedIdForm;
+import com.example.demo.form.ToDoListEditForm;
 import com.example.demo.form.ToDoListNewForm;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ToDoListService;
@@ -222,7 +223,7 @@ public class ToDoListController {
 	}
 	
 	@PostMapping("/update")
-	public String update(RedirectAttributes redirectAttributes, Model model, ToDoListNewForm form, @AuthenticationPrincipal User user) {
+	public String update(RedirectAttributes redirectAttributes, Model model, ToDoListEditForm form, @AuthenticationPrincipal User user) {
 		String selectedTodolistId = (String)session.getAttribute(SessionKeyConst.SELECTED_TODOLIST_ID);
 		ToDoListMessage updateMessage = toDoListService.updateTodolist(form, selectedTodolistId);
 		

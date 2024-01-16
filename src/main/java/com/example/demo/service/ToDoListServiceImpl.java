@@ -12,6 +12,7 @@ import com.example.demo.entity.CategoryInfo;
 import com.example.demo.entity.ToDoListInfo;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.SearchForm;
+import com.example.demo.form.ToDoListEditForm;
 import com.example.demo.form.ToDoListNewForm;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ToDoListRepository;
@@ -78,7 +79,7 @@ public class ToDoListServiceImpl implements ToDoListService{
 	}
 	
 	@Override
-	public ToDoListMessage updateTodolist(ToDoListNewForm form, String selectedTodolistId) {
+	public ToDoListMessage updateTodolist(ToDoListEditForm form, String selectedTodolistId) {
 		Optional<ToDoListInfo> selectedTodolist = toDoListRepository.findById(selectedTodolistId);
 		if(selectedTodolist.isEmpty()) {
 			return ToDoListMessage.UPDATE_FAILED;
@@ -91,6 +92,7 @@ public class ToDoListServiceImpl implements ToDoListService{
 		todolist.setTitle(form.getTitle());
 		todolist.setBody(form.getBody());
 		todolist.setCategory(category.get());
+		todolist.setStatus(form.getStatus());
 		
 		try {
 			toDoListRepository.save(todolist);
