@@ -10,13 +10,13 @@ import lombok.Getter;
 public enum ListStatusKind {
 	
 	/** 未達成：初期 */
-	UNTOUCHED("1", "未達成"),
+	UNTOUCHED("1", "未開始"),
 	
 	/** 進行中 */
 	IN_PROCESS("2", "進行中"),
 	
 	/** 達成済み */
-	COMPLETED("3", "達成済み");
+	COMPLETED("3", "完了");
 	
 	private String categoryCode;
 	private String displayValue;

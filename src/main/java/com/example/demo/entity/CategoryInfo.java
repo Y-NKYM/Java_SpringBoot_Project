@@ -22,5 +22,5 @@ public class CategoryInfo {
 	private String name;
 	
 	@OneToMany(mappedBy="category")
-	private List<ToDoListInfo> toDoLists;
+	private List<TodolistInfo> todolists;
 }

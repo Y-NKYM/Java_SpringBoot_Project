@@ -53,18 +53,18 @@ public class UserInfo {
 	private AuthorityKind authority;
 	
 	@OneToMany(mappedBy="user")
-	private List<ToDoListInfo> toDoLists;
+	private List<TodolistInfo> todolists;
 	
 	public UserInfo incrementLoginFailureCount() {
-		return new UserInfo(userId, name, email, password, ++loginFailureCount, accountLockedTime, status, authority, toDoLists);
+		return new UserInfo(userId, name, email, password, ++loginFailureCount, accountLockedTime, status, authority, todolists);
 	} 
 	
 	public UserInfo updateAccountLocked() {
-		return new UserInfo(userId, name, email, password, 0, LocalDateTime.now(), status, authority, toDoLists);
+		return new UserInfo(userId, name, email, password, 0, LocalDateTime.now(), status, authority, todolists);
 	}
 	
 	public UserInfo resetLoginFailureInfo() {
-		return new UserInfo(userId, name, email, password, 0, null, status, authority, toDoLists);
+		return new UserInfo(userId, name, email, password, 0, null, status, authority, todolists);
 	}
 	
 	
