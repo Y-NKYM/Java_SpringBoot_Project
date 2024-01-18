@@ -15,6 +15,7 @@ public class MessageConst {
 	
 	/** 新規リスト登録 */
 	public static final String TODOLIST_SUCCEED = "todolist.succeed";
+	public static final String TODOLIST_VALIDATE_FAILED = "todolist.validateFailed";
 	public static final String TODOLIST_FAILED = "todolist.failed";
 	
 	/** リスト編集画面 */

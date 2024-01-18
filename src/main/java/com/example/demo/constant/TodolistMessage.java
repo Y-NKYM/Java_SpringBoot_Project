@@ -10,6 +10,7 @@ public enum TodolistMessage {
 	SUCCEED(MessageConst.TODOLIST_SUCCEED, false),
 	FAILED(MessageConst.TODOLIST_FAILED, true),
 	
+	VALIDATE_FAILED(MessageConst.TODOLIST_VALIDATE_FAILED, true),
 	ID_NOT_FOUND(MessageConst.TODOLIST_ID_NOT_FOUND, true),
 	
 	UPDATE_SUCCEED(MessageConst.TODOLIST_UPDATE_SUCCEED, false),
