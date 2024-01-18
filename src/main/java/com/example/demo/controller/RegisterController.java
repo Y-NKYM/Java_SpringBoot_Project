@@ -55,7 +55,7 @@ public class RegisterController {
 	@PostMapping()
 	public String register(HttpServletRequest request, HttpServletResponse response, Model model,@Validated RegisterForm form, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
-			storeMessage(model, RegisterMessage.VALIDATE_FAILED.getMessageId(), true);
+			storeMessage(model, RegisterMessage.VALIDATE_FAILED.getMessageId(), RegisterMessage.VALIDATE_FAILED.isError());
 			return ViewHtmlConst.REGISTER;
 		}
 		
