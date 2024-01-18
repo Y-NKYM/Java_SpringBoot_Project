@@ -24,7 +24,7 @@ import com.example.demo.constant.TodolistColumn;
 import com.example.demo.constant.TodolistMessage;
 import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.ViewHtmlConst;
-import com.example.demo.dto.TodolistEditDTO;
+import com.example.demo.dto.ToDoListEditDTO;
 import com.example.demo.entity.CategoryInfo;
 import com.example.demo.entity.TodolistInfo;
 import com.example.demo.entity.UserInfo;
@@ -105,7 +105,7 @@ public class TodolistController {
 				TodolistColumn selectedColumn = TodolistColumn.findSelectedColumn(form.getColumn());
 				model.addAttribute("selectedOrder", selectedOrder);
 				model.addAttribute("selectedColumn", selectedColumn);
-				model.addAttribute("todolists", list);
+				model.addAttribute("toDoLists", list);
 				model.addAttribute("search", true);
 			}
 		}
@@ -123,8 +123,8 @@ public class TodolistController {
 	public String create(RedirectAttributes redirectAttributes, @AuthenticationPrincipal User authUser, Model model, TodolistNewForm form) {
 		Optional<TodolistInfo> todolist = todolistService.createTodolist(form);
 		
-		TodolistMessage todolistMessage = chooseMessage(todolist);
-		modelMap.addAttribute("message", todolistMessage);
+		TodolistMessage toDoListMessage = chooseMessage(todolist);
+		modelMap.addAttribute("message", toDoListMessage);
 		redirectAttributes.addFlashAttribute("modelMap", modelMap);
 		
 		return AppUtil.doRedirect(UrlConst.TODOLIST);
@@ -192,7 +192,7 @@ public class TodolistController {
 			
 			return AppUtil.doRedirect(UrlConst.TODOLIST);
 		}
-		var selectedTodolist = mapper.map(todolist.get(), TodolistEditDTO.class);
+		var selectedTodolist = mapper.map(todolist.get(), ToDoListEditDTO.class);
 		selectedTodolist.setCategoryId(todolist.get().getCategory().getCategoryId());
 		model.addAttribute("todolistForm" , selectedTodolist);
 		
