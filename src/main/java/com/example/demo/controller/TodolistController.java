@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -120,7 +122,14 @@ public class TodolistController {
 	}
 	
 	@PostMapping("/create")
-	public String create(RedirectAttributes redirectAttributes, @AuthenticationPrincipal User authUser, Model model, TodolistNewForm form) {
+	public String create(RedirectAttributes redirectAttributes, @AuthenticationPrincipal User authUser, Model model, @Validated TodolistNewForm form, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			storeMessage(model, TodolistMessage.VALIDATE_FAILED.getMessageId(), TodolistMessage.VALIDATE_FAILED.isError());
+			List<CategoryInfo> categories = categoryService.getCategories();
+			model.addAttribute("categories", categories);
+			return ViewHtmlConst.TODOLIST_NEW;
+		}
+		
 		Optional<TodolistInfo> todolist = todolistService.createTodolist(form);
 		
 		TodolistMessage toDoListMessage = chooseMessage(todolist);
