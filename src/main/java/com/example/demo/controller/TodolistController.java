@@ -232,7 +232,15 @@ public class TodolistController {
 	}
 	
 	@PostMapping("/update")
-	public String update(RedirectAttributes redirectAttributes, Model model, TodolistEditForm form, @AuthenticationPrincipal User user) {
+	public String update(RedirectAttributes redirectAttributes, Model model, @Validated TodolistEditForm form, BindingResult bindingResult, @AuthenticationPrincipal User user) {
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("todolistForm", form);
+			List<CategoryInfo> categories = categoryService.getCategories();
+			model.addAttribute("categories", categories);
+			model.addAttribute("statusOptions", ListStatusKind.values());
+			return ViewHtmlConst.TODOLIST_EDIT_ERROR;
+		}
+		
 		String selectedTodolistId = (String)session.getAttribute(SessionKeyConst.SELECTED_TODOLIST_ID);
 		TodolistMessage updateMessage = todolistService.updateTodolist(form, selectedTodolistId);
 		

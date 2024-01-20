@@ -19,6 +19,7 @@ public class ViewHtmlConst {
 	
 	/** ToDo編集画面 */
 	public static final String TODOLIST_EDIT = "/todolist/edit";
+	public static final String TODOLIST_EDIT_ERROR = "/todolist/edit_error";
 	
 	/** ToDo詳細画面 */
 	public static final String TODOLIST_SHOW = "/todolist/show";

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<div th:replace="~{partial/head::head}"></div>
+	<title>編集画面</title>
+</head>
+<body>
+	<div th:replace="~{partial/navbar::navbar-auth}"></div>
+	<div class="m-3">
+		<div th:insert="~{partial/alert::alert}"></div>
+	</div>
+	<div class="container-fluid col-11 my-5">
+		<div class="row">
+			<div class="col-1">
+				<a th:href="@{/todolist/show}" th:text="＜詳細に戻る"></a>
+			</div>
+			<div class="container-fluid col-10">
+				<h2>リスト編集画面</h2>
+				<div class="my-4">
+					<form th:action="@{/todolist/update}" method="post" th:object="${todolistEditForm}">
+						<input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
+						<div class="mt-3">
+							<label for="title" class="form-label">タイトル</label>
+							<input type="text" th:field="*{title}" class="form-control">
+							<span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+						</div>
+						<div class="mt-3">
+							<label for="body" class="form-label">内容</label>
+							<textarea type="text" th:field="*{body}" class="form-control" rows="5"></textarea>
+						</div>
+						<div class="mt-3">
+							<label for="categoryId" class="form-label">カテゴリー</label>
+							<select th:field="*{categoryId}" class="form-select">
+								<option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}" th:selected="${category.categoryId==todolistForm.categoryId}"> </option>
+							</select>
+						</div>
+						<div class="mt-3">
+							<label for="status" class="form-label">ステータス</label>
+							<select th:field="*{status}" class="form-select" >
+								<option th:each="status: ${statusOptions}" th:value="${status}" th:text="${status.displayValue}"></option>
+							</select>
+						</div>
+						<div class="mt-3">
+							<button class="btn btn-primary">更新</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
+</body>
+</html>
