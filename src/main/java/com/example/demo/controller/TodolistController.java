@@ -234,6 +234,7 @@ public class TodolistController {
 	@PostMapping("/update")
 	public String update(RedirectAttributes redirectAttributes, Model model, @Validated TodolistEditForm form, BindingResult bindingResult, @AuthenticationPrincipal User user) {
 		if(bindingResult.hasErrors()) {
+			storeMessage(model, TodolistMessage.VALIDATE_FAILED.getMessageId(), TodolistMessage.VALIDATE_FAILED.isError());
 			model.addAttribute("todolistForm", form);
 			List<CategoryInfo> categories = categoryService.getCategories();
 			model.addAttribute("categories", categories);
